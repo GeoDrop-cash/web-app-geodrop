@@ -26,7 +26,7 @@ export default function HTML (props) {
           crossorigin=""></script>
 
         {/* minimal-slp-wallet-web */}
-        <script src='https://unpkg.com/minimal-slp-wallet-web' />
+        <script src='https://unpkg.com/minimal-slp-wallet' />
 
         {/* bch-message-lib */}
         <script src='https://unpkg.com/bch-message-lib' />
