@@ -5,15 +5,12 @@
   This file controls the View (the part on the right side of the dashboard) of
   the component. The menu item is controlled by the menu-components.js file.
 */
-
 import React from 'react'
+import { Plugins } from '@capacitor/core'
 import { Row, Col, Content, Box, Button } from 'adminlte-2-react'
-import { getWalletInfo } from 'gatsby-ipfs-web-wallet/src/components/localWallet'
+import { Helmet } from 'react-helmet'
 
-const BchWallet =
-  typeof window !== 'undefined'
-    ? window.SlpWallet
-    : null
+const { Geolocation } = Plugins
 
 let _this
 class View2 extends React.Component {
@@ -21,129 +18,70 @@ class View2 extends React.Component {
     super(props)
     _this = this
     this.state = {
-      unconfirmedBalance: 0,
-      confirmedBalance: 0,
-      totalBalance: 0,
-      inFetch: false,
-      bchWallet: '',
-      isChecked: ''
-
+      inFetch: true,
+      coords: {},
+      timestamp: ''
     }
   }
 
   render () {
-    const {
-      unconfirmedBalance,
-      confirmedBalance,
-      totalBalance,
-      inFetch,
-      isChecked
-    } = _this.state
+    const { inFetch, coords, timestamp } = _this.state
     return (
-      <Content
-        title='Demo Component'
-        subTitle='Check the BCH balance of an address'
-        browserTitle='Demo Component'
-      >
-        <Row>
-          <Col xs={12}>
-            <Box
-              title='BCH Balance'
-              type='primary'
-              closable
-              collapsable
-              loaded={!inFetch}
-              footer={
-                <Button
-                  type='primary'
-                  text='Check Balance'
-                  onClick={_this.handleGetBalance}
-                />
-              }
-            >
+      <Row>
+        <Col xs={12}>
+          <Box
+            title='Geolocation'
+            loaded={!inFetch} >
+            <p>Latitude : {coords.latitude || 'Not Found'}</p>
+            <p>Longitude : {coords.longitude || 'Not Found'}</p>
+            <p>Timestamp : {timestamp || 'Not Found'}</p>
+          </Box>
+          {coords.latitude && coords.longitude && (
+            <div id='mapid' style={{ height: '100vh' }}>
 
-              {
-                isChecked &&
-                  <div>
-                    <p>Confirmed: {confirmedBalance}</p>
-                    <p>Unconfirmed: {unconfirmedBalance}</p>
-                    <p>Total : <strong>{totalBalance}</strong></p>
-                  </div>
-
-              }
-
-            </Box>
-          </Col>
-        </Row>
-      </Content>
+            </div>
+          )
+          }
+        </Col>
+      </Row>
     )
   }
 
-  componentDidMount () {
-    _this.instanceWallet() // Creates a web wallet instance
+  async componentDidMount () {
+    const coords = await _this.getCurrentPosition()
+    // console.log(window)
+    setTimeout(() => {
+      _this.initMap(coords)
+    }, 2000)
   }
 
-  // Get wallet balance
-  async handleGetBalance () {
+  async getCurrentPosition () {
+    console.log('Getting Current Position')
+    const coordinates = await Geolocation.getCurrentPosition()
+    console.log('Current', coordinates)
+    _this.setState({
+      coords: coordinates.coords,
+      timestamp: coordinates.timestamp,
+      inFetch: false
+    })
+    return coordinates.coords
+  }
+
+  initMap (coords) {
     try {
-      _this.setState({
-        inFetch: true
-      })
+      const API_KEY = 'pk.eyJ1IjoiZXJpY2tnb256YWxlemRldiIsImEiOiJja2p2Mm91bjkwMHdjMnlvM2w1bWh1OTc5In0.1FH61V5ajjIEU0IBVgmQ5g'
+      var mymap = window.L.map('mapid').setView([coords.latitude, coords.longitude], 13)
 
-      const addr = 'bitcoincash:qr69kyzha07dcecrsvjwsj4s6slnlq4r8c30lxnur3'
-
-      const bchWallet = _this.state.bchWallet
-      const bchjs = bchWallet.bchjs
-
-      // Get the Balance
-      const balances = await bchjs.Electrumx.balance(addr)
-
-      const totalBalance = balances.balance.confirmed + balances.balance.unconfirmed
-
-      _this.setState({
-        inFetch: false,
-        unconfirmedBalance: balances.balance.unconfirmed,
-        confirmedBalance: balances.balance.confirmed,
-        totalBalance: totalBalance,
-        isChecked: true
-      })
+      window.L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${API_KEY}`, {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: API_KEY
+      }).addTo(mymap)
     } catch (error) {
       console.error(error)
-      _this.setState({
-        inFetch: false
-      })
-    }
-  }
-
-  // Creates an instance  of minimal-slp-wallet, with
-  // the local storage information if it exists
-  instanceWallet () {
-    try {
-      const localStorageInfo = getWalletInfo()
-      if (!localStorageInfo.mnemonic) return null
-
-      const jwtToken = localStorageInfo.JWT
-      const restURL = localStorageInfo.selectedServer
-      const bchjsOptions = {}
-
-      if (jwtToken) {
-        bchjsOptions.apiToken = jwtToken
-      }
-      if (restURL) {
-        bchjsOptions.restURL = restURL
-      }
-      const bchWalletLib = new BchWallet(localStorageInfo.mnemonic, bchjsOptions)
-
-      // Update bchjs instances  of minimal-slp-wallet libraries
-      bchWalletLib.tokens.sendBch.bchjs = new bchWalletLib.BCHJS(bchjsOptions)
-      bchWalletLib.tokens.utxos.bchjs = new bchWalletLib.BCHJS(bchjsOptions)
-
-      _this.setState({
-        bchWallet: bchWalletLib
-      })
-      return bchWalletLib
-    } catch (error) {
-      console.warn(error)
     }
   }
 }
