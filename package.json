@@ -1,6 +1,6 @@
 {
-  "name": "bch-wallet-starter",
-  "description": "A BCH web wallet starter for Gatsby.",
+  "name": "purelypeer-app",
+  "description": "A Gatsby JS app for playing the PurelyPeer game.",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Chris Troutner <chris.troutner@gmail.com>",
@@ -25,13 +25,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Permissionless-Software-Foundation/bch-wallet-starter"
+    "url": "https://github.com/PurelyPeer/purelypeer-app"
   },
   "bugs": {
-    "url": "https://github.com/Permissionless-Software-Foundation/bch-wallet-starter/issues"
+    "url": "https://github.com/PurelyPeer/purelypeer-app/issues"
   },
   "devDependencies": {
-    "semantic-release": "^17.3.0",
+    "semantic-release": "^17.3.1",
     "standard": "^14.3.4"
   },
   "release": {
