@@ -5,7 +5,7 @@
   </a>
 </p>
 <h1 align="center">
-  A BCH Web Wallet Gatsby Starter
+  A BCH Web Wallet Gatsby Starter.
 </h1>
 
 Create your own Bitcoin Cash web wallet app with this Gatsby Starter. This Starter leverages the [gatsby-ipfs-web-wallet Gatsby Theme](https://github.com/Permissionless-Software-Foundation/gatsby-ipfs-web-wallet) by [FullStack.cash](https://fullstack.cash). Additional plugins can be developed with the [bch-wallet-plugin-boilerplate](https://github.com/Permissionless-Software-Foundation/bch-wallet-plugin-boilerplate).
