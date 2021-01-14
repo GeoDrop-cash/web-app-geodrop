@@ -37,46 +37,6 @@ const { Item } = Sidebar
 const MenuComponents = props => {
   return [
     {
-      key: 'Tokens',
-      component: <Tokens key='Tokens' {...props} />,
-      menuItem: <Item icon='fas-coins' key='Tokens' text='Tokens' />
-    },
-    {
-      key: 'Send/Receive BCH',
-      component: <SendReceive key='Send/Receive BCH' {...props} />,
-      menuItem: (
-        <Item
-          icon='fa-exchange-alt'
-          key='Send/Receive BCH'
-          text='Send/Receive BCH'
-        />
-      )
-    },
-    {
-      key: 'Wallet',
-      component: <Wallet key='Wallet' {...props} />,
-      menuItem: <Item icon='fa-wallet' key='Wallet' text='Wallet' />
-    },
-    {
-      key: 'Configure',
-      component: <Configure key='Configure' {...props} />,
-      menuItem: <Item icon='fas-cog' key='Configure' text='Configure' />
-    },
-    {
-      key: 'TX History',
-      component: <TXHistory key='TX History' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='TX History' text='TX History' />
-      )
-    },
-    {
-      key: 'Demo Component',
-      component: <DemoComponent key='Demo Component' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='Demo Component' text='Demo Component' />
-      )
-    },
-    {
       key: 'CashDrop',
       component: <CashDrop key='CashDrop' {...props} />,
       menuItem: (
@@ -96,6 +56,47 @@ const MenuComponents = props => {
       component: <Play key='Play' {...props} />,
       menuItem: (
         <Item icon='fas-cog' key='Play' text='Play' />
+      )
+    },
+    {
+      key: 'Tokens',
+      component: <Tokens key='Tokens' {...props} />,
+      menuItem: <Item icon='fas-coins' key='Tokens' text='Tokens' />
+    },
+
+    {
+      key: 'Wallet',
+      component: <Wallet key='Wallet' {...props} />,
+      menuItem: <Item icon='fa-wallet' key='Wallet' text='Wallet' />
+    },
+    {
+      key: 'Configure',
+      component: <Configure key='Configure' {...props} />,
+      menuItem: <Item icon='fas-cog' key='Configure' text='Configure' />
+    },
+    {
+      key: 'Send/Receive BCH',
+      component: <SendReceive key='Send/Receive BCH' {...props} />,
+      menuItem: (
+        <Item
+          icon='fa-exchange-alt'
+          key='Send/Receive BCH'
+          text='Send/Receive BCH'
+        />
+      )
+    },
+    {
+      key: 'TX History',
+      component: <TXHistory key='TX History' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='TX History' text='TX History' />
+      )
+    },
+    {
+      key: 'Demo Component',
+      component: <DemoComponent key='Demo Component' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='Demo Component' text='Demo Component' />
       )
     },
     {
