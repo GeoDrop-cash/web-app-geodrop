@@ -7,13 +7,11 @@
 */
 
 import React from 'react'
-import { Content } from 'adminlte-2-react'
-
-const BchWallet =
-  typeof window !== 'undefined'
-    ? window.SlpWallet
-    : null
-
+import { Plugins } from '@capacitor/core'
+import { Row, Col, Content, Box, Button, Inputs } from 'adminlte-2-react'
+import { Helmet } from 'react-helmet'
+import CashDropForm from './form'
+import CashDropMap from './map'
 let _this
 class CashDrop extends React.Component {
   constructor (props) {
@@ -26,17 +24,21 @@ class CashDrop extends React.Component {
 
   render () {
     return (
+
       <Content
-        title='CashDrop'
-        subTitle='CashDrop'
         browserTitle='CashDrop'
       >
-
+        <Row>
+          <Col xs={12}>
+            <CashDropMap />
+            <CashDropForm />
+          </Col>
+        </Row>
       </Content>
     )
   }
 
-  componentDidMount () {
+  async componentDidMount () {
   }
 }
 
