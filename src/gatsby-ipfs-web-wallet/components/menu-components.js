@@ -16,6 +16,10 @@ import View1 from '../../view1'
 import View2 from '../../view2'
 import View3 from '../../view3'
 
+import CashDrop from '../../cashdrop'
+import Explore from '../../explore'
+import Play from '../../play'
+
 // TX History Plugin.
 // This is an example of an external plugin for the wallet. It's a modular
 // approach to sharing 'lego blocks' between wallet apps.
@@ -70,6 +74,28 @@ const MenuComponents = props => {
       component: <DemoComponent key='Demo Component' {...props} />,
       menuItem: (
         <Item icon='fas-cog' key='Demo Component' text='Demo Component' />
+      )
+    },
+    {
+      key: 'CashDrop',
+      component: <CashDrop key='CashDrop' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='CashDrop' text='CashDrop' />
+      )
+    },
+    {
+      active: true,
+      key: 'Explore',
+      component: <Explore key='Explore' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='Explore' text='Explore' />
+      )
+    },
+    {
+      key: 'Play',
+      component: <Play key='Play' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='Play' text='Play' />
       )
     },
     {
