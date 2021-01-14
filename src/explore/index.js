@@ -8,12 +8,6 @@
 
 import React from 'react'
 import { Content } from 'adminlte-2-react'
-import NavMenu from '../nav-menu'
-
-const BchWallet =
-  typeof window !== 'undefined'
-    ? window.SlpWallet
-    : null
 
 let _this
 class Explore extends React.Component {
@@ -28,7 +22,6 @@ class Explore extends React.Component {
   render () {
     return (
       <>
-        <NavMenu />
         <Content
           title='Explore'
           subTitle='Explore'
@@ -41,6 +34,39 @@ class Explore extends React.Component {
   }
 
   componentDidMount () {
+    _this.removeWarningElemente()
+  }
+
+  // NOTE: Due that there's no wrapper this function
+  // needs to be called on the first loaded component
+  // in this case the 'explore' component
+  //
+  // Function to remove the 'warning alpha version' tag
+  removeWarningElemente () {
+    const interval = setInterval(() => {
+      try {
+        // Locate the parent element
+        const navbarElem = document.getElementsByClassName('navbar-nav')
+        if (!navbarElem || !navbarElem.length) throw new Error('Warning alpha not found')
+        // get the childrent element that
+        // we want to delete
+        const children = navbarElem[0].children[0]
+
+        if (!children) {
+          // deleted. exits
+          clearInterval(interval)
+          return
+        }
+        // Deletes the element
+        navbarElem[0].removeChild(children)
+        clearInterval(interval)
+      } catch (error) {
+        // If we dont found the parent element, retry until
+        // that gets rendered and we can locate it
+        clearInterval(interval)
+        this.removeWarningElemente()
+      }
+    }, 200)
   }
 }
 
