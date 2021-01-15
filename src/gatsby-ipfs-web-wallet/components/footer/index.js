@@ -5,8 +5,7 @@
 */
 
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Row, Col, Content, Box, Button, Inputs } from 'adminlte-2-react'
+import { Row, Col } from 'adminlte-2-react'
 import 'gatsby-ipfs-web-wallet/src/components/footer/footer.css'
 import './footer.css'
 // import Footer from 'gatsby-ipfs-web-wallet/src/components/footer'

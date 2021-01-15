@@ -26,9 +26,7 @@ class Explore extends React.Component {
           title='Explore'
           subTitle='Explore'
           browserTitle='Explore'
-        >
-
-        </Content>
+        />
       </>
     )
   }

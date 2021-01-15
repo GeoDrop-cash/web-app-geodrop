@@ -7,38 +7,66 @@
 */
 
 import React from 'react'
-import { Plugins } from '@capacitor/core'
-import { Row, Col, Content, Box, Button, Inputs } from 'adminlte-2-react'
-import { Helmet } from 'react-helmet'
+import { Row, Col, Content, Box } from 'adminlte-2-react'
 import CashDropForm from './form'
 import CashDropMap from './map'
+import './cashdrop.css'
 let _this
 class CashDrop extends React.Component {
   constructor (props) {
     super(props)
     _this = this
     this.state = {
-
+      hasLocation: true,
+      inFetch: true
     }
   }
 
   render () {
+    const { inFetch, hasLocation } = _this.state
     return (
 
       <Content
         browserTitle='CashDrop'
       >
-        <Row>
-          <Col xs={12}>
-            <CashDropMap />
-            <CashDropForm />
-          </Col>
-        </Row>
+        {hasLocation ? (
+          /* Shows map and form */
+          <Box
+            loaded={!inFetch}
+            className='border-none'
+          >
+            <Row>
+              <Col xs={12} lg={6}>
+                <CashDropMap handleLocation={_this.onLocation} />
+              </Col>
+              <Col xs={12} lg={6}>
+                <CashDropForm />
+              </Col>
+            </Row>
+
+          </Box>
+        )
+          : (
+            /* Notifies the user */
+            <Box className='text-center'>
+              <span>We couldn't access to your location</span>
+
+            </Box>
+          )}
+
       </Content>
     )
   }
 
   async componentDidMount () {
+  }
+
+  // Verifies if the user location has been obtained
+  onLocation (hasLocation) {
+    _this.setState({
+      hasLocation,
+      inFetch: false
+    })
   }
 }
 

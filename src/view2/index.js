@@ -7,8 +7,7 @@
 */
 import React from 'react'
 import { Plugins } from '@capacitor/core'
-import { Row, Col, Content, Box, Button } from 'adminlte-2-react'
-import { Helmet } from 'react-helmet'
+import { Row, Col, Box } from 'adminlte-2-react'
 
 const { Geolocation } = Plugins
 
@@ -31,17 +30,15 @@ class View2 extends React.Component {
         <Col xs={12}>
           <Box
             title='Geolocation'
-            loaded={!inFetch} >
+            loaded={!inFetch}
+          >
             <p>Latitude : {coords.latitude || 'Not Found'}</p>
             <p>Longitude : {coords.longitude || 'Not Found'}</p>
             <p>Timestamp : {timestamp || 'Not Found'}</p>
           </Box>
           {coords.latitude && coords.longitude && (
-            <div id='mapid' style={{ height: '100vh' }}>
-
-            </div>
-          )
-          }
+            <div id='mapid' style={{ height: '100vh' }} />
+          )}
         </Col>
       </Row>
     )
