@@ -1,19 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Plugins } from '@capacitor/core'
-import { Row, Col, Content, Box, Button, Inputs } from 'adminlte-2-react'
-import { Helmet } from 'react-helmet'
+import { Row, Col, Box } from 'adminlte-2-react'
 import {
   MapContainer,
-  TileLayer,
-  useMapEvents,
-  MapConsumer
+  TileLayer
 } from 'react-leaflet'
-
-import L from 'leaflet'
 
 const { Geolocation } = Plugins
 
-const { Text, Select } = Inputs
 let _this
 class CashDropMap extends React.Component {
   constructor (props) {
@@ -28,21 +23,23 @@ class CashDropMap extends React.Component {
   render () {
     const { latitude, longitude } = _this.state
     return (
-      <Row>
+      <Row className='chashdrop-map'>
         <Col xs={12}>
           {
             latitude && longitude && (
-              <MapContainer
-                center={[latitude, longitude]}
-                zoom={15}
-                style={{ height: '50vh' }}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+              <Box className='cashdrop-box border-none'>
+                <MapContainer
+                  center={[latitude, longitude]}
+                  zoom={15}
+                  style={{ height: '70vh' }}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                  />
 
-              </MapContainer>
+                </MapContainer>
+              </Box>
             )
           }
         </Col>
@@ -69,11 +66,16 @@ class CashDropMap extends React.Component {
         longitude,
         inFetch: false
       })
+      this.props.handleLocation(latitude && longitude)
       return coordinates.coords
     } catch (error) {
+      this.props.handleLocation(false)
       console.error(error)
     }
   }
 }
+CashDropMap.propTypes = {
+  handleLocation: PropTypes.func.isRequired // Function that notifies if the user location has been obtained
 
+}
 export default CashDropMap

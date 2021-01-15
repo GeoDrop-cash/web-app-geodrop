@@ -9,16 +9,10 @@
 import React from 'react'
 import { Content } from 'adminlte-2-react'
 
-const BchWallet =
-  typeof window !== 'undefined'
-    ? window.SlpWallet
-    : null
-
-let _this
 class Play extends React.Component {
   constructor (props) {
     super(props)
-    _this = this
+
     this.state = {
 
     }
@@ -30,9 +24,7 @@ class Play extends React.Component {
         title='Play'
         subTitle='Play'
         browserTitle='Play'
-      >
-
-      </Content>
+      />
     )
   }
 
