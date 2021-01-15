@@ -18,12 +18,13 @@ class CashDrop extends React.Component {
     _this = this
     this.state = {
       hasLocation: true,
-      inFetch: true
+      inFetch: true,
+      mapInfo: {}
     }
   }
 
   render () {
-    const { inFetch, hasLocation } = _this.state
+    const { inFetch, hasLocation, mapInfo } = _this.state
     return (
 
       <Content
@@ -37,10 +38,13 @@ class CashDrop extends React.Component {
           >
             <Row>
               <Col xs={12} lg={6}>
-                <CashDropMap handleLocation={_this.onLocation} />
+                <CashDropMap
+                  handleLocation={_this.onLocation}
+                  handleMapInfo={_this.onMapInfo}
+                />
               </Col>
               <Col xs={12} lg={6}>
-                <CashDropForm />
+                <CashDropForm mapInfo={mapInfo} />
               </Col>
             </Row>
 
@@ -66,6 +70,13 @@ class CashDrop extends React.Component {
     _this.setState({
       hasLocation,
       inFetch: false
+    })
+  }
+
+  // Function to receive information sent from the Map component
+  onMapInfo (info) {
+    _this.setState({
+      mapInfo: info
     })
   }
 }
