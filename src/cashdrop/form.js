@@ -3,8 +3,12 @@ import { Plugins } from '@capacitor/core'
 import { Row, Col, Content, Box, Button, Inputs } from 'adminlte-2-react'
 import { Helmet } from 'react-helmet'
 import CashDropQr from './qr-code'
+import fetch from 'isomorphic-fetch'
+
 const { Text, Select } = Inputs
+
 let _this
+
 class CashDropForm extends React.Component {
   constructor (props) {
     super(props)
@@ -26,21 +30,21 @@ class CashDropForm extends React.Component {
       selectedRadius,
       rewardOptions,
       selectedReward,
-      errMsg, showQr
+      errMsg,
+      showQr
     } = _this.state
     return (
       <Row>
         <Col xs={12}>
-          <Box
-            className='hover-shadow border-none mt-2'>
+          <Box className="hover-shadow border-none mt-2">
             <Row>
-              <Col sm={12} className='text-center mt-2 mb-2'>
-                <Row className=''>
+              <Col sm={12} className="text-center mt-2 mb-2">
+                <Row className="">
                   <Col sm={12} lg={4}>
                     <Select
-                      name='selectedRadius'
-                      label='Radius'
-                      labelPosition='above'
+                      name="selectedRadius"
+                      label="Radius"
+                      labelPosition="above"
                       options={radiusOptions}
                       value={selectedRadius}
                       onChange={_this.handleUpdate}
@@ -48,20 +52,20 @@ class CashDropForm extends React.Component {
                   </Col>
                   <Col sm={12} lg={4}>
                     <Text
-                      id='cashdrop-pins'
-                      name='cashdropPins'
-                      label='Pins'
-                      placeholder='How many pins to drop.'
-                      labelPosition='above'
+                      id="cashdrop-pins"
+                      name="cashdropPins"
+                      label="Pins"
+                      placeholder="How many pins to drop."
+                      labelPosition="above"
                       onChange={_this.handleUpdate}
                     />
                   </Col>
                   <Col sm={12} lg={4}>
                     <Select
-                      id='cashdrop-reward'
-                      name='selectedReward'
-                      label='Reward'
-                      labelPosition='above'
+                      id="cashdrop-reward"
+                      name="selectedReward"
+                      label="Reward"
+                      labelPosition="above"
                       options={rewardOptions}
                       value={selectedReward}
                       onChange={_this.handleUpdate}
@@ -69,23 +73,21 @@ class CashDropForm extends React.Component {
                   </Col>
                 </Row>
               </Col>
-              <Col sm={12} className='text-center mb-2'>
-                { !showQr && (<Button
-                  text='Submit'
-                  type='primary'
-                  className='btn-lg'
-                  onClick={_this.handleSubmit}
-                />)}
-              </Col>
-              <Col sm={12} className='text-center'>
-                {errMsg && (
-                  <p className='error-color'>{errMsg}</p>
+              <Col sm={12} className="text-center mb-2">
+                {!showQr && (
+                  <Button
+                    text="Submit"
+                    type="primary"
+                    className="btn-lg"
+                    onClick={_this.handleSubmit}
+                  />
                 )}
               </Col>
-              <Col sm={12} className='text-center'>
-                {showQr && (
-                  <CashDropQr onHide={_this.hideQr}/>
-                )}
+              <Col sm={12} className="text-center">
+                {errMsg && <p className="error-color">{errMsg}</p>}
+              </Col>
+              <Col sm={12} className="text-center">
+                {showQr && <CashDropQr onHide={_this.hideQr} />}
               </Col>
             </Row>
           </Box>
@@ -94,8 +96,7 @@ class CashDropForm extends React.Component {
     )
   }
 
-  async componentDidMount () {
-  }
+  async componentDidMount () {}
 
   handleUpdate (event) {
     const value = event.target.value
@@ -105,15 +106,36 @@ class CashDropForm extends React.Component {
     })
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     try {
       _this.validateInputs()
       /*
-        *
-        *
-        * SUBMIT
-        *
-        * */
+       *
+       *
+       * SUBMIT
+       *
+       * */
+
+      const SERVER = process.env.SERVER
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          campaign: {
+            drops: [1, 2, 3],
+            merchant: 'test'
+          }
+        })
+      }
+      const data = await fetch(`${SERVER}/campaigns`, options)
+      const campaign = await data.json()
+      console.log(campaign)
+
+      console.log(`Pay this BCH address: ${campaign.campaign.bchAddr}`)
+
       _this.setState({
         errMsg: '',
         showQr: true
