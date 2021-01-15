@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col, Box, Button, Inputs } from 'adminlte-2-react'
 import CashDropQr from './qr-code'
 import fetch from 'isomorphic-fetch'
+import PropTypes from 'prop-types'
 
 const { Text, Select } = Inputs
 
@@ -157,7 +158,15 @@ class CashDropForm extends React.Component {
 
   async handleSubmit () {
     try {
+      // Validate form
       _this.validateInputs()
+
+      const { mapInfo } = _this.props
+      /**
+       *
+       * TODO: Validate mapInfo
+       */
+
       /*
        *
        *
@@ -176,10 +185,14 @@ class CashDropForm extends React.Component {
         body: JSON.stringify({
           campaign: {
             drops: [1, 2, 3],
-            merchant: 'test'
+            merchant: 'test',
+            lat: mapInfo.latitude,
+            long: mapInfo.longitude,
+            radius: mapInfo.radius
           }
         })
       }
+
       const data = await fetch(`${SERVER}/campaigns`, options)
       const campaign = await data.json()
       console.log(campaign)
@@ -192,11 +205,11 @@ class CashDropForm extends React.Component {
       const sats = cashdropPins * 10000
 
       _this.setState({
-        errMsg: '',
         showQr: true,
         amount: _this.convertToBch(sats),
         address: campaign.campaign.bchAddr
       })
+      _this.resetForm()
     } catch (error) {
       _this.setState({
         errMsg: error.message
@@ -232,6 +245,17 @@ class CashDropForm extends React.Component {
       console.error(error)
     }
   }
-}
 
+  resetForm () {
+    _this.setState({
+      selectedRadius: 1000,
+      selectedReward: 1,
+      cashdropPins: '',
+      errMsg: ''
+    })
+  }
+}
+CashDropForm.propTypes = {
+  mapInfo: PropTypes.object
+}
 export default CashDropForm

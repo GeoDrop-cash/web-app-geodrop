@@ -50,6 +50,10 @@ class CashDropMap extends React.Component {
 
   async componentDidMount () {
     await _this.getCurrentPosition()
+
+    // This Function Sends test data to the form
+    // para crear un modelo de campaña to create the campaign model
+    _this.getMapInfo()
   }
 
   // Gets current GPS location of the user device
@@ -66,6 +70,7 @@ class CashDropMap extends React.Component {
         longitude,
         inFetch: false
       })
+
       this.props.handleLocation(latitude && longitude)
       return coordinates.coords
     } catch (error) {
@@ -73,9 +78,29 @@ class CashDropMap extends React.Component {
       console.error(error)
     }
   }
+
+  // Gets Latitud and longitude and radius from the map
+  // to be sent to the form
+  getMapInfo () {
+    /**
+     *
+     *  TODO: Get map info to create
+     *  a campaign model
+     *
+     */
+    // Mock info
+    const data = {
+      latitude: Math.random() * (100 - -100),
+      longitude: Math.random() * (100 - -100),
+      radius: 20
+    }
+    // Sends the info to the form
+    this.props.handleMapInfo(data)
+  }
 }
 CashDropMap.propTypes = {
-  handleLocation: PropTypes.func.isRequired // Function that notifies if the user location has been obtained
+  handleLocation: PropTypes.func.isRequired, // Function that notifies if the user location has been obtained
+  handleMapInfo: PropTypes.func.isRequired // Function to send the info to the parent component
 
 }
 export default CashDropMap
