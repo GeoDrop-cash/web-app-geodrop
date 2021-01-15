@@ -35,6 +35,8 @@ class Explore extends React.Component {
 
   componentDidMount () {
     _this.removeWarningElemente()
+
+    _this.hideSplash()
   }
 
   // NOTE: Due that there's no wrapper this function
@@ -67,6 +69,14 @@ class Explore extends React.Component {
         this.removeWarningElemente()
       }
     }, 200)
+  }
+
+  // Hides the splash 1.5 secs after loading all components
+  hideSplash () {
+    setTimeout(() => {
+      const splash = document.getElementById('___splash')
+      splash.style.display = 'none'
+    }, 1500)
   }
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 // import { withPrefix, Link } from 'gatsby'
 
 // window && typeof window !== 'undefined' && window.test = 'testing'
-
+import Logo from './images/purelypeer-splash.jpg'
 export default function HTML (props) {
   return (
     <html {...props.htmlAttributes}>
@@ -35,6 +35,24 @@ export default function HTML (props) {
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
+        <div
+          key={'splash'}
+          id="___splash"
+          style={{
+            alignItems: 'center',
+            backgroundColor: '#0AC18E',
+            display: 'flex',
+            justifyContent: 'center',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9000
+          }}
+        >
+          <img src={Logo} style={{ width: '500px' }}/>
+        </div>
         <div
           key='body'
           id='___gatsby'
