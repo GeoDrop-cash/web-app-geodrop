@@ -147,9 +147,9 @@ class CashDropForm extends React.Component {
       // Get the pin coordinates from the map
       const pinCoords = _this.props.handlePinCoordinates()
       console.log('Pin coordinates :', pinCoords)
+      const cashdropPins = pinCoords.length
 
       const {
-        cashdropPins,
         cashdropTokenName,
         cashdropTokenTicker,
         cashdropTokenUrl
