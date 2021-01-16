@@ -81,11 +81,12 @@ class CashDropMap extends React.Component {
 
   // This function pulls the coordinates for all the pins that were placed on
   // the map.
+  // Returns an array of objects. Each object has a lat and lng property.
   getPinCoordinates () {
     try {
       if (!_this.map) {
         console.log('map object does not exist? Has the view been rendered?')
-        return
+        return []
       }
 
       const map = _this.map
