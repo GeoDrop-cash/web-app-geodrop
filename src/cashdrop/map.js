@@ -52,7 +52,7 @@ class CashDropMap extends React.Component {
     await _this.getCurrentPosition()
 
     // This Function Sends test data to the form
-    // para crear un modelo de campaña to create the campaign model
+    // to create the campaign model
     _this.getMapInfo()
   }
 
@@ -90,8 +90,8 @@ class CashDropMap extends React.Component {
      */
     // Mock info
     const data = {
-      latitude: Math.random() * (100 - -100),
-      longitude: Math.random() * (100 - -100),
+      latitude: _this.state.latitude, // Sends the latitude of the user
+      longitude: _this.state.longitude, // Sends the longitude of the user
       radius: 20
     }
     // Sends the info to the form

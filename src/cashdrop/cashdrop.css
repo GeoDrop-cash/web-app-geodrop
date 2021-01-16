@@ -56,18 +56,19 @@
   font-size: 16px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
     .cashdrop-form .cashdrop-box {
       height: auto!important;
       display: block!important;
   
     }
   }
-  @media screen and (max-height: 500px) {
+  @media screen and (max-height: 700px) {
     .cashdrop-form .cashdrop-box {
       height: auto!important;
       display: block!important;
   
     }
   }
+
 
