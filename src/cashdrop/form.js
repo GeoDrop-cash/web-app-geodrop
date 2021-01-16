@@ -18,6 +18,9 @@ class CashDropForm extends React.Component {
       rewardOptions: [1],
       selectedReward: 1,
       cashdropPins: '',
+      cashdropTokenName: '',
+      cashdropTokenTicker: '',
+      cashdropTokenUrl: '',
       errMsg: '',
       showQr: '',
       amount: ''
@@ -39,77 +42,125 @@ class CashDropForm extends React.Component {
           <Box className='text-center cashdrop-box border-none'>
             <Row>
               <Col sm={12}>
-                <h1><span>Merchant Details</span></h1>
+                <h3><span>Merchant Details</span></h3>
               </Col>
               {
                 !showQr && (
                   <section>
-                    <Col sm={12} className='text-center mt-2 mb-2'>
+                    <Col sm={12} className='text-center mt-2 mb-1'>
                       <Row>
-                        <form name='radioInputs' className='radiousForm'>
-                          <div className='radiousInputs'>
-                            <div>
-                              <input
-                                type='radio'
-                                id='radius-select1'
-                                name='selectedRadius'
-                                value={1}
-                                onChange={_this.handleUpdate}
-                                defaultChecked
-                              />
-                              <span> 15Min <span aria-label='Walking' role='img'>🚶‍♀️</span> </span>
-                            </div>
-                            <div>
-                              <input
-                                type='radio'
-                                id='radius-select2'
-                                name='selectedRadius'
-                                value={2}
-                                onChange={_this.handleUpdate}
-                              />
-                              <span> Urban <span aria-label='Urban' role='img'>🏙️</span> </span>
-                            </div>
-                            <div>
-                              <input
-                                type='radio'
-                                id='radius-select3'
-                                name='selectedRadius'
-                                value={3}
-                                onChange={_this.handleUpdate}
-                              />
-                              <span> Regional <span aria-label='Regional' role='img'>🛣️</span></span>
-                            </div>
-                            <div>
-                              <input
-                                type='radio'
-                                id='radius-select4'
-                                name='selectedRadius'
-                                value={4}
-                                onChange={_this.handleUpdate}
-                              />
-                              <span> Continental <span aria-label='Continental' role='img'>🌐</span></span>
-                            </div>
 
-                          </div>
+                        <form name='radioInputs' className='radiousForm'>
+                          <Row xs={12} className="mb-2">
+                            <Col xs={6}>
+                              <div className='radiousInputs'>
+                                <div>
+                                  <input
+                                    type='radio'
+                                    id='radius-select1'
+                                    name='selectedRadius'
+                                    value={1}
+                                    onChange={_this.handleUpdate}
+                                    defaultChecked
+                                  />
+                                  <span> 15Min <span aria-label='Walking' role='img'>🚶‍♀️</span> </span>
+                                </div>
+                                <div>
+                                  <input
+                                    type='radio'
+                                    id='radius-select2'
+                                    name='selectedRadius'
+                                    value={2}
+                                    onChange={_this.handleUpdate}
+                                  />
+                                  <span> Urban <span aria-label='Urban' role='img'>🏙️</span> </span>
+                                </div>
+                              </div>
+                            </Col>
+                            <Col xs={6}>
+                              <div className='radiousInputs'>
+
+                                <div>
+                                  <input
+                                    type='radio'
+                                    id='radius-select3'
+                                    name='selectedRadius'
+                                    value={3}
+                                    onChange={_this.handleUpdate}
+                                  />
+                                  <span> Regional <span aria-label='Regional' role='img'>🛣️</span></span>
+                                </div>
+                                <div>
+                                  <input
+                                    type='radio'
+                                    id='radius-select4'
+                                    name='selectedRadius'
+                                    value={4}
+                                    onChange={_this.handleUpdate}
+                                  />
+                                  <span> Continental <span aria-label='Continental' role='img'>🌐</span></span>
+                                </div>
+
+                              </div>
+                            </Col>
+                          </Row>
+
                         </form>
+                        <Col sm= {12}>
+                          <Row>
+                            <Col xs={6}>
+
+                              <Text
+                                id='cashdrop-pins'
+                                name='cashdropPins'
+                                label='Pins'
+                                placeholder='How many pins to drop.'
+                                labelPosition='above'
+                                onChange={_this.handleUpdate}
+                              />
+
+                            </Col>
+                            <Col xs={6}>
+                              <Select
+                                id='cashdrop-reward'
+                                name='selectedReward'
+                                label='Reward'
+                                labelPosition='above'
+                                options={rewardOptions}
+                                value={selectedReward}
+                                onChange={_this.handleUpdate}
+                              />
+                            </Col>
+                          </Row>
+                        </Col>
+
                         <Col sm={12}>
                           <Text
-                            id='cashdrop-pins'
-                            name='cashdropPins'
-                            label='Pins'
-                            placeholder='How many pins to drop.'
+                            id='cashdrop-token-name'
+                            name='cashdropTokenName'
+                            label='Token Name'
+                            placeholder='Enter token name.'
                             labelPosition='above'
                             onChange={_this.handleUpdate}
                           />
                         </Col>
                         <Col sm={12}>
-                          <Select
-                            id='cashdrop-reward'
-                            name='selectedReward'
-                            label='Reward'
+                          <Text
+                            id='cashdrop-token-ticker'
+                            name='cashdropTokenTicker'
+                            label='Token Ticker'
+                            placeholder='Enter token ticker.'
                             labelPosition='above'
-                            options={rewardOptions}
-                            value={selectedReward}
+                            onChange={_this.handleUpdate}
+                          />
+                        </Col>
+                        <Col sm={12}>
+                          <Text
+                            id='cashdrop-token-url'
+                            name='cashdropTokenUrl'
+                            label='Token Url'
+                            placeholder='Enter token url.'
+                            labelPosition='above'
                             onChange={_this.handleUpdate}
                           />
                         </Col>
@@ -173,7 +224,12 @@ class CashDropForm extends React.Component {
        * SUBMIT
        *
        * */
-      const { cashdropPins } = _this.state
+      const {
+        cashdropPins,
+        cashdropTokenName,
+        cashdropTokenTicker,
+        cashdropTokenUrl
+      } = _this.state
 
       const SERVER = process.env.SERVER
 
@@ -188,7 +244,12 @@ class CashDropForm extends React.Component {
             merchant: 'test',
             lat: mapInfo.latitude,
             long: mapInfo.longitude,
-            radius: mapInfo.radius
+            radius: mapInfo.radius,
+            tokenName: cashdropTokenName,
+            tokenTicker: cashdropTokenTicker,
+            tokenUrl: cashdropTokenUrl,
+            tokenQty: cashdropPins
+
           }
         })
       }
@@ -218,7 +279,12 @@ class CashDropForm extends React.Component {
   }
 
   validateInputs () {
-    const { cashdropPins } = _this.state
+    const {
+      cashdropPins,
+      cashdropTokenName,
+      cashdropTokenTicker,
+      cashdropTokenUrl
+    } = _this.state
     const pinsNumber = Number(cashdropPins)
 
     if (!pinsNumber) {
@@ -227,6 +293,15 @@ class CashDropForm extends React.Component {
 
     if (pinsNumber <= 0) {
       throw new Error('Amount must be greater than 1')
+    }
+    if (!cashdropTokenName) {
+      throw new Error('Must add a token name')
+    }
+    if (!cashdropTokenTicker) {
+      throw new Error('Must add a token ticker')
+    }
+    if (!cashdropTokenUrl) {
+      throw new Error('Must add a token url')
     }
   }
 
@@ -251,6 +326,9 @@ class CashDropForm extends React.Component {
       selectedRadius: 1000,
       selectedReward: 1,
       cashdropPins: '',
+      cashdropTokenName: '',
+      cashdropTokenTicker: '',
+      cashdropTokenUrl: '',
       errMsg: ''
     })
   }
