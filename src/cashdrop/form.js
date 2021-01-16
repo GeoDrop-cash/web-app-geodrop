@@ -42,7 +42,7 @@ class CashDropForm extends React.Component {
           <Box className='text-center cashdrop-box border-none'>
             <Row>
               <Col sm={12}>
-                <h3><span>Merchant Details</span></h3>
+                <h3><span>Pay this address and amount to add your pins to the game!</span></h3>
               </Col>
               {
                 !showQr && (
@@ -158,7 +158,7 @@ class CashDropForm extends React.Component {
                           <Text
                             id='cashdrop-token-url'
                             name='cashdropTokenUrl'
-                            label='Token Url'
+                            label='Website'
                             placeholder='Enter token url.'
                             labelPosition='above'
                             onChange={_this.handleUpdate}
