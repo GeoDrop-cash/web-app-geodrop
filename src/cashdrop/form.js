@@ -51,7 +51,7 @@ class CashDropForm extends React.Component {
                       <Row>
 
                         <form name='radioInputs' className='radiousForm'>
-                          <Row xs={12} className="mb-2">
+                          <Row xs={12} className='mb-2'>
                             <Col xs={6}>
                               <div className='radiousInputs'>
                                 <div>
@@ -106,7 +106,7 @@ class CashDropForm extends React.Component {
                           </Row>
 
                         </form>
-                        <Col sm= {12}>
+                        <Col sm={12}>
                           <Row>
                             <Col xs={6}>
 
@@ -231,8 +231,6 @@ class CashDropForm extends React.Component {
         cashdropTokenUrl
       } = _this.state
 
-      const sats = cashdropPins * 10000
-
       const SERVER = process.env.SERVER
 
       const options = {
@@ -250,8 +248,8 @@ class CashDropForm extends React.Component {
             tokenName: cashdropTokenName,
             tokenTicker: cashdropTokenTicker,
             tokenUrl: cashdropTokenUrl,
-            tokenQty: cashdropPins,
-            satsToPay: sats
+            tokenQty: cashdropPins
+
           }
         })
       }
@@ -264,6 +262,8 @@ class CashDropForm extends React.Component {
       if (!campaign.campaign.bchAddr) {
         throw new Error('Address not found!')
       }
+
+      const sats = cashdropPins * 10000
 
       _this.setState({
         showQr: true,
