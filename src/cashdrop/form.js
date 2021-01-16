@@ -231,6 +231,8 @@ class CashDropForm extends React.Component {
         cashdropTokenUrl
       } = _this.state
 
+      const sats = cashdropPins * 10000
+
       const SERVER = process.env.SERVER
 
       const options = {
@@ -248,8 +250,8 @@ class CashDropForm extends React.Component {
             tokenName: cashdropTokenName,
             tokenTicker: cashdropTokenTicker,
             tokenUrl: cashdropTokenUrl,
-            tokenQty: cashdropPins
-
+            tokenQty: cashdropPins,
+            satsToPay: sats
           }
         })
       }
@@ -262,8 +264,6 @@ class CashDropForm extends React.Component {
       if (!campaign.campaign.bchAddr) {
         throw new Error('Address not found!')
       }
-
-      const sats = cashdropPins * 10000
 
       _this.setState({
         showQr: true,
