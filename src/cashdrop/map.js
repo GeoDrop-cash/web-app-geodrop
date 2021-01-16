@@ -73,10 +73,10 @@ class CashDropMap extends React.Component {
 
   async componentDidMount () {
     await _this.getCurrentPosition()
-
     // This Function Sends test data to the form
     // to create the campaign model
     _this.getMapInfo()
+    _this.props.handlePinCoordinates(_this.getPinCoordinates)
   }
 
   // This function pulls the coordinates for all the pins that were placed on
@@ -202,7 +202,8 @@ class CashDropMap extends React.Component {
 
 CashDropMap.propTypes = {
   handleLocation: PropTypes.func.isRequired, // Function that notifies if the user location has been obtained
-  handleMapInfo: PropTypes.func.isRequired // Function to send the info to the parent component
+  handleMapInfo: PropTypes.func.isRequired, // Function to send the info to the parent component
+  handlePinCoordinates: PropTypes.func.isRequired
 }
 
 export default CashDropMap
