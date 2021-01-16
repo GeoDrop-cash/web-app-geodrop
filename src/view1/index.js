@@ -14,10 +14,10 @@ import {
   TileLayer,
   useMapEvents,
   MapConsumer
-} from "react-leaflet";
-import L from "leaflet";
-import icon from "../constants";
-import DraggableMarker from "../map-component/draggableMarker"
+} from 'react-leaflet'
+import L from 'leaflet'
+import icon from '../constants'
+import DraggableMarker from '../map-component/draggableMarker'
 
 const { Geolocation } = Plugins
 
@@ -26,38 +26,38 @@ export default function View1 () {
     lng: -0.09,
     lat: 51.505,
     zoom: 4
-  };
+  }
   const [coords, setCoords] = useState([{}])
   useEffect(async () => {
     const coordinates = await Geolocation.getCurrentPosition()
     console.log('Coordinates', coordinates.coords.latitude)
     const lat = coordinates.coords.latitude
     const lng = coordinates.coords.longitude
-    setCoords({lat: lat, lng: lng})
+    setCoords({ lat: lat, lng: lng })
   }, [])
 
   const MyComponent = () => {
     const map = useMapEvents({
       click: (e) => {
-        const { lat, lng } = e.latlng;
-        console.log("lat:", lat, "lon:", lng)
-        L.marker([lat, lng], { 
-          id: 1, 
+        const { lat, lng } = e.latlng
+        console.log('lat:', lat, 'lon:', lng)
+        L.marker([lat, lng], {
+          id: 1,
           icon: icon,
-          draggable: true 
-        }).addTo(map);
+          draggable: true
+        }).addTo(map)
       }
-    });
-    return null;
+    })
+    return null
   }
 
   return (
     <Row>
-      <Col xs={12}>        
+      <Col xs={12}>
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
-          style={{ height: "100vh" }}
+          style={{ height: '100vh' }}
           // whenReady={(map) => {
           //   console.log(map);
           //   map.target.on("click", function (e) {
@@ -88,5 +88,5 @@ export default function View1 () {
         </MapContainer>
       </Col>
     </Row>
-  );
+  )
 }

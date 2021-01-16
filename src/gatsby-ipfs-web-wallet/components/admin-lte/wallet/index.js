@@ -9,7 +9,7 @@ import React from 'react'
 import Wallet from 'gatsby-ipfs-web-wallet/src/components/admin-lte/wallet/index'
 
 // import TXHistory from 'gatsby-plugin-bch-tx-history/src/components/txhistory'
-import TXHistory from 'gatsby-plugin-bch-tx-history'
+// import TXHistory from 'gatsby-plugin-bch-tx-history'
 
 class Wallet2 extends Wallet {
   // class Wallet2 extends React.Component {
@@ -23,12 +23,12 @@ class Wallet2 extends Wallet {
   render () {
     return (
       <>
-        <Wallet {...this.props} importComponents={this.addCards()} />
+        <Wallet {...this.props} />
       </>
     )
   }
 
-  addCards () {
+/*   addCards () {
     return (
       <>
         <TXHistory
@@ -37,7 +37,7 @@ class Wallet2 extends Wallet {
         />
       </>
     )
-  }
+  } */
 }
 
 export default Wallet2

@@ -1,0 +1,74 @@
+ .cashdrop-box{
+    height: 70vh;
+
+}
+
+.chashdrop-map 
+.leaflet-container,
+.chashdrop-map 
+.box-body{
+    height: 100%!important;
+}
+
+.cashdrop-form .cashdrop-box{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.radiousInputs{
+  width: fit-content;
+    margin: 0 auto;
+    text-align: initial;
+}
+.radiousInputs input{
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+  background: white;
+}
+.radiousInputs input{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+.radiousInputs input{
+  width: 20px;
+    height: 20px;
+    background-color: rgba(238, 238, 238, 0.637);
+    cursor: pointer;
+    border: 2px solid var(--main-color);
+}
+.radiousInputs div{
+  display:flex;
+  align-items: center;
+}
+.radiousInputs span{
+  margin-left: 8px;
+}
+.radiousInputs input:checked{
+
+    background-color: var(--main-color);
+    outline: none;
+   
+}
+ 
+.cashdrop-amount{
+  font-size: 16px;
+}
+
+@media screen and (max-width: 700px) {
+    .cashdrop-form .cashdrop-box {
+      height: auto!important;
+      display: block!important;
+  
+    }
+  }
+  @media screen and (max-height: 700px) {
+    .cashdrop-form .cashdrop-box {
+      height: auto!important;
+      display: block!important;
+  
+    }
+  }
+
+

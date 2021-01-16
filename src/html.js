@@ -16,14 +16,18 @@ export default function HTML (props) {
         />
 
         {/* leafletjs css */}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
+        <link
+          rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css'
+          integrity='sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=='
+          crossorigin=''
+        />
 
         {/* leafletjs js */}
-        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-          crossorigin=""></script>
+        <script
+          src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'
+          integrity='sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=='
+          crossorigin=''
+        />
 
         {/* minimal-slp-wallet-web */}
         <script src='https://unpkg.com/minimal-slp-wallet' />
@@ -36,8 +40,8 @@ export default function HTML (props) {
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
         <div
-          key={'splash'}
-          id="___splash"
+          key='splash'
+          id='___splash'
           style={{
             alignItems: 'center',
             backgroundColor: '#0AC18E',
@@ -51,7 +55,7 @@ export default function HTML (props) {
             zIndex: 9000
           }}
         >
-          <img src={Logo} style={{ width: '500px' }}/>
+          <img src={Logo} style={{ width: '500px' }} />
         </div>
         <div
           key='body'

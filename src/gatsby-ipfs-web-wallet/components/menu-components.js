@@ -85,13 +85,13 @@ const MenuComponents = props => {
         />
       )
     },
-    {
+    /*     {
       key: 'TX History',
       component: <TXHistory key='TX History' {...props} />,
       menuItem: (
         <Item icon='fas-cog' key='TX History' text='TX History' />
       )
-    },
+    }, */
     {
       key: 'Demo Component',
       component: <DemoComponent key='Demo Component' {...props} />,
