@@ -8,8 +8,9 @@ import {
   useMapEvents,
   MapConsumer
 } from 'react-leaflet'
-
 import L from 'leaflet'
+import DraggableMarker from '../map-component/draggableMarker'
+import icon from "../constants";
 
 const { Geolocation } = Plugins
 
@@ -41,7 +42,23 @@ class CashDropMap extends React.Component {
                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
+                {/* this.state.latitude != '' && this.state.longitude != ''
+                  ? <DraggableMarker lat={latitude} lng={longitude} />
+                  : <></>
+                */}
+                <MapConsumer>
+                  {(map) => {
+                    map.on("click", (e) => {
+                      const { lat, lng } = e.latlng
+                      console.log("lat:", lat, "lon:", lng)
+                      L.marker([lat, lng], {
+                      	 icon: icon,
+                      	 draggable: true
+                      }).addTo(map)
+                    })
+                    return null
+                  }}
+                </MapConsumer>
               </MapContainer>
             )
           }
