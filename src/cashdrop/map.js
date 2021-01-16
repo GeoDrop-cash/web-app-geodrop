@@ -4,9 +4,13 @@ import { Plugins } from '@capacitor/core'
 import { Row, Col, Box } from 'adminlte-2-react'
 import {
   MapContainer,
-  TileLayer
+  TileLayer,
+  useMapEvents,
+  MapConsumer
 } from 'react-leaflet'
-
+import L from 'leaflet'
+import icon from '../constants'
+// import DraggableMarker from '../map-component/draggableMarker'
 const { Geolocation } = Plugins
 
 let _this
@@ -27,6 +31,7 @@ class CashDropMap extends React.Component {
         <Col xs={12}>
           {
             latitude && longitude && (
+
               <Box className='cashdrop-box border-none'>
                 <MapContainer
                   center={[latitude, longitude]}
@@ -35,15 +40,31 @@ class CashDropMap extends React.Component {
                 >
                   <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
-
+                  {/* this.state.latitude != '' && this.state.longitude != ''
+                  ? <DraggableMarker lat={latitude} lng={longitude} />
+                  : <></>
+                */}
+                  <MapConsumer>
+                    {(map) => {
+                      map.on('click', (e) => {
+                        const { lat, lng } = e.latlng
+                        console.log('lat:', lat, 'lon:', lng)
+                        L.marker([lat, lng], {
+                          icon: icon,
+                          draggable: true
+                        }).addTo(map)
+                      })
+                      return null
+                    }}
+                  </MapConsumer>
                 </MapContainer>
               </Box>
             )
           }
         </Col>
-      </Row>
+      </Row >
 
     )
   }
