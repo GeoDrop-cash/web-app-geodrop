@@ -70,6 +70,7 @@
 .explore-table thead tr th{
   text-align: center;
 }
+
 @media screen and (max-width: 700px) {
     .explore-table {
       height: auto!important;
@@ -85,5 +86,43 @@
 
     }
   }
+
+
+  /* Scroll css*/
+
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border: 0px none var(--main-color);
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none var(--main-color);
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 
