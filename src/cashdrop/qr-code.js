@@ -23,6 +23,7 @@ class CashDropQr extends React.Component {
             includeMargin
             fgColor='#333'
           />
+          <p>{_this.props.address}</p>
           <p className='cashdrop-amount'>Amount : <b>{_this.props.amount}</b></p>
 
         </Col>
