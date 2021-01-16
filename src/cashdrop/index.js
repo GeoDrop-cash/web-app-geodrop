@@ -15,7 +15,8 @@ class CashDrop extends React.Component {
     this.state = {
       hasLocation: true,
       inFetch: true,
-      mapInfo: {}
+      mapInfo: {},
+      handlePinCoordinates: () => {}
     }
   }
 
@@ -37,10 +38,14 @@ class CashDrop extends React.Component {
                 <CashDropMap
                   handleLocation={_this.onLocation}
                   handleMapInfo={_this.onMapInfo}
+                  handlePinCoordinates={_this.onPinCoordinates}
                 />
               </Col>
               <Col xs={12} lg={6}>
-                <CashDropForm mapInfo={mapInfo} />
+                <CashDropForm
+                  mapInfo={mapInfo}
+                  handlePinCoordinates={_this.state.handlePinCoordinates}
+                />
               </Col>
             </Row>
 
@@ -73,6 +78,15 @@ class CashDrop extends React.Component {
   onMapInfo (info) {
     _this.setState({
       mapInfo: info
+    })
+  }
+
+  // Receives the function 'getPinCoordinates' from
+  // componente Map. Then this function gets added to the state
+  // so it can be passed as props to the other components
+  onPinCoordinates (callback) {
+    _this.setState({
+      handlePinCoordinates: callback
     })
   }
 }

@@ -44,7 +44,9 @@ class CashDropForm extends React.Component {
               <Col sm={12}>
                 <h3>
                   <span>
-                    Pay this address and amount to add your pins to the game!
+                    {showQr
+                      ? 'Pay this address and amount to add your pins to the game!'
+                      : 'Add your tokens to the map!'}
                   </span>
                 </h3>
               </Col>
@@ -142,7 +144,9 @@ class CashDropForm extends React.Component {
        *
        * */
 
-      // TODO: Get the pin coordinates from the map
+      // Get the pin coordinates from the map
+      const pinCoords = _this.props.handlePinCoordinates()
+      console.log('Pin coordinates :', pinCoords)
 
       const {
         cashdropPins,
@@ -160,7 +164,7 @@ class CashDropForm extends React.Component {
         },
         body: JSON.stringify({
           campaign: {
-            drops: [1, 2, 3],
+            drops: pinCoords,
             merchant: 'test',
             lat: mapInfo.latitude,
             long: mapInfo.longitude,
@@ -205,10 +209,9 @@ class CashDropForm extends React.Component {
       cashdropTokenUrl
     } = _this.state
 
-    // TODO: Get the number of pins placed on the map.
-    // const pinsNumber = Number(cashdropPins)
-    const pinsNumber = 5
-
+    // Get the number of pins placed on the map.
+    const pinCoords = _this.props.handlePinCoordinates()
+    const pinsNumber = pinCoords.length
     if (!pinsNumber) {
       throw new Error('Please place some pins on the map')
     }
@@ -256,6 +259,7 @@ class CashDropForm extends React.Component {
   }
 }
 CashDropForm.propTypes = {
-  mapInfo: PropTypes.object
+  mapInfo: PropTypes.object,
+  handlePinCoordinates: PropTypes.func.isRequired // Function to get the pin data from the map
 }
 export default CashDropForm
