@@ -38,151 +38,68 @@ class CashDropForm extends React.Component {
     } = _this.state
     return (
       <Row>
-        <Col xs={12} className='cashdrop-form'>
-          <Box className='text-center cashdrop-box border-none'>
+        <Col xs={12} className="cashdrop-form">
+          <Box className="text-center cashdrop-box border-none">
             <Row>
               <Col sm={12}>
-                <h3><span>Pay this address and amount to add your pins to the game!</span></h3>
+                <h3>
+                  <span>
+                    Pay this address and amount to add your pins to the game!
+                  </span>
+                </h3>
               </Col>
-              {
-                !showQr && (
-                  <section>
-                    <Col sm={12} className='text-center mt-2 mb-1'>
-                      <Row>
-
-                        <form name='radioInputs' className='radiousForm'>
-                          <Row xs={12} className='mb-2'>
-                            <Col xs={6}>
-                              <div className='radiousInputs'>
-                                <div>
-                                  <input
-                                    type='radio'
-                                    id='radius-select1'
-                                    name='selectedRadius'
-                                    value={1}
-                                    onChange={_this.handleUpdate}
-                                    defaultChecked
-                                  />
-                                  <span> 15Min <span aria-label='Walking' role='img'>🚶‍♀️</span> </span>
-                                </div>
-                                <div>
-                                  <input
-                                    type='radio'
-                                    id='radius-select2'
-                                    name='selectedRadius'
-                                    value={2}
-                                    onChange={_this.handleUpdate}
-                                  />
-                                  <span> Urban <span aria-label='Urban' role='img'>🏙️</span> </span>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col xs={6}>
-                              <div className='radiousInputs'>
-
-                                <div>
-                                  <input
-                                    type='radio'
-                                    id='radius-select3'
-                                    name='selectedRadius'
-                                    value={3}
-                                    onChange={_this.handleUpdate}
-                                  />
-                                  <span> Regional <span aria-label='Regional' role='img'>🛣️</span></span>
-                                </div>
-                                <div>
-                                  <input
-                                    type='radio'
-                                    id='radius-select4'
-                                    name='selectedRadius'
-                                    value={4}
-                                    onChange={_this.handleUpdate}
-                                  />
-                                  <span> Continental <span aria-label='Continental' role='img'>🌐</span></span>
-                                </div>
-
-                              </div>
-                            </Col>
-                          </Row>
-
-                        </form>
-                        <Col sm={12}>
-                          <Row>
-                            <Col xs={6}>
-
-                              <Text
-                                id='cashdrop-pins'
-                                name='cashdropPins'
-                                label='Pins'
-                                placeholder='How many pins to drop.'
-                                labelPosition='above'
-                                onChange={_this.handleUpdate}
-                              />
-
-                            </Col>
-                            <Col xs={6}>
-                              <Select
-                                id='cashdrop-reward'
-                                name='selectedReward'
-                                label='Reward'
-                                labelPosition='above'
-                                options={rewardOptions}
-                                value={selectedReward}
-                                onChange={_this.handleUpdate}
-                              />
-                            </Col>
-                          </Row>
-                        </Col>
-
-                        <Col sm={12}>
-                          <Text
-                            id='cashdrop-token-name'
-                            name='cashdropTokenName'
-                            label='Token Name'
-                            placeholder='Enter token name.'
-                            labelPosition='above'
-                            onChange={_this.handleUpdate}
-                          />
-                        </Col>
-                        <Col sm={12}>
-                          <Text
-                            id='cashdrop-token-ticker'
-                            name='cashdropTokenTicker'
-                            label='Token Ticker'
-                            placeholder='Enter token ticker.'
-                            labelPosition='above'
-                            onChange={_this.handleUpdate}
-                          />
-                        </Col>
-                        <Col sm={12}>
-                          <Text
-                            id='cashdrop-token-url'
-                            name='cashdropTokenUrl'
-                            label='Website'
-                            placeholder='Enter token url.'
-                            labelPosition='above'
-                            onChange={_this.handleUpdate}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col sm={12} className='text-center mb-2'>
-                      {!showQr && (
-                        <Button
-                          text='Submit'
-                          type='primary'
-                          className='btn-lg'
-                          onClick={_this.handleSubmit}
+              {!showQr && (
+                <section>
+                  <Col sm={12} className="text-center mt-2 mb-1">
+                    <Row>
+                      <Col sm={12}>
+                        <Text
+                          id="cashdrop-token-name"
+                          name="cashdropTokenName"
+                          label="Token Name"
+                          placeholder="Enter token name."
+                          labelPosition="above"
+                          onChange={_this.handleUpdate}
                         />
-                      )}
-                    </Col>
-                  </section>
-                )
-              }
-              <Col sm={12} className='text-center'>
-                {errMsg && (<p className='error-color'>{errMsg}</p>)}
+                      </Col>
+                      <Col sm={12}>
+                        <Text
+                          id="cashdrop-token-ticker"
+                          name="cashdropTokenTicker"
+                          label="Token Ticker"
+                          placeholder="Enter token ticker."
+                          labelPosition="above"
+                          onChange={_this.handleUpdate}
+                        />
+                      </Col>
+                      <Col sm={12}>
+                        <Text
+                          id="cashdrop-token-url"
+                          name="cashdropTokenUrl"
+                          label="Website"
+                          placeholder="Enter token url."
+                          labelPosition="above"
+                          onChange={_this.handleUpdate}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col sm={12} className="text-center mb-2">
+                    {!showQr && (
+                      <Button
+                        text="Submit"
+                        type="primary"
+                        className="btn-lg"
+                        onClick={_this.handleSubmit}
+                      />
+                    )}
+                  </Col>
+                </section>
+              )}
+              <Col sm={12} className="text-center">
+                {errMsg && <p className="error-color">{errMsg}</p>}
               </Col>
-              <Col sm={12} className='text-center'>
+              <Col sm={12} className="text-center">
                 {showQr && (
                   <CashDropQr
                     handleOnHide={_this.hideQr}
@@ -252,7 +169,6 @@ class CashDropForm extends React.Component {
             tokenTicker: cashdropTokenTicker,
             tokenUrl: cashdropTokenUrl,
             tokenQty: cashdropPins
-
           }
         })
       }
@@ -288,10 +204,13 @@ class CashDropForm extends React.Component {
       cashdropTokenTicker,
       cashdropTokenUrl
     } = _this.state
-    const pinsNumber = Number(cashdropPins)
+
+    // TODO: Get the number of pins placed on the map.
+    // const pinsNumber = Number(cashdropPins)
+    const pinsNumber = 5
 
     if (!pinsNumber) {
-      throw new Error('Pins must be a number')
+      throw new Error('Please place some pins on the map')
     }
 
     if (pinsNumber <= 0) {
