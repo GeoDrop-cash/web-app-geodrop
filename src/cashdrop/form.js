@@ -224,6 +224,9 @@ class CashDropForm extends React.Component {
        * SUBMIT
        *
        * */
+
+      // TODO: Get the pin coordinates from the map
+
       const {
         cashdropPins,
         cashdropTokenName,

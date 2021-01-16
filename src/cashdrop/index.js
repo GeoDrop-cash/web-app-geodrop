@@ -1,9 +1,5 @@
 /*
-  This is a demonstration component. It helps to show how you can create new
-  menu items and Views in your own BCH web wallet dashboard app.
-
-  This file controls the View (the part on the right side of the dashboard) of
-  the component. The menu item is controlled by the menu-components.js file.
+  CashDrop View. This View allows Merchants to create Campaigns.
 */
 
 import React from 'react'
