@@ -38,6 +38,7 @@ class ExploreMap extends React.Component {
       console.log('Explore.MyComponent is mounted')
       // Get map
       const map = useMap()
+      console.log("explore map props", props)
 
       // Get geolocation from props
       const { lat, lng } = props
@@ -59,6 +60,9 @@ class ExploreMap extends React.Component {
           map.removeLayer(_layerControl)
         }
         const layer = L.marker([lat, lng], { id: 1, icon: icon }).addTo(map)
+        layer.bindPopup(
+          `<p>Lat: ${lat}, Lng: ${lng}</p>`
+        ).openPopup()
         _layerControl = layer // Store the new marker
 
         console.log(`Fly To : lat: ${lat} , lng: ${lng}`)
