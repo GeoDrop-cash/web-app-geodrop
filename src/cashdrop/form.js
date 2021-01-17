@@ -58,8 +58,8 @@ class CashDropForm extends React.Component {
                         <Text
                           id="cashdrop-token-name"
                           name="cashdropTokenName"
-                          label="Token Name"
-                          placeholder="Enter token name."
+                          label="Merchant Name"
+                          placeholder="Enter merchant name."
                           labelPosition="above"
                           onChange={_this.handleUpdate}
                         />
@@ -220,7 +220,7 @@ class CashDropForm extends React.Component {
       throw new Error('Amount must be greater than 1')
     }
     if (!cashdropTokenName) {
-      throw new Error('Must add a token name')
+      throw new Error('Must add a merchant name')
     }
     if (!cashdropTokenTicker) {
       throw new Error('Must add a token ticker')
