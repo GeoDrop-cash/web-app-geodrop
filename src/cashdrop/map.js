@@ -69,11 +69,11 @@ class CashDropMap extends React.Component {
                       }
                       const geoJson = marker.toGeoJSON(6)
                       console.log('geoJson:', geoJson)
-                      marker
+                      {/* marker
                         .bindPopup(
                           `<p>${geoJsonData.properties.popupContent}</p>`
                         )
-                        .openPopup()
+                        .openPopup() */}
                     })
 
                     // Create a handle to the map object after its been rendered.
