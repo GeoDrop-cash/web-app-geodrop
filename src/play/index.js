@@ -26,7 +26,11 @@ class Play extends React.Component {
       showTerminal: true,
       dropFound: false,
       longitude: '',
-      latitude: ''
+      latitude: '',
+
+      // Hard coding this value for testing.
+      playerAddr: 'simpleledger:qqlrzp23w08434twmvr4fxw672whkjy0pyxpgpyg0n',
+      campaignId: ''
     }
     _this = this
     this.msgInterval = null
@@ -61,11 +65,48 @@ class Play extends React.Component {
               type="primary"
               className="btn-lg"
               disabled={!dropFound}
+              onClick={_this.handleCollect}
             />
           </Col>
         </Row>
       </Content>
     )
+  }
+
+  // Click handler for the Collect button
+  async handleCollect () {
+    try {
+      console.log(`Campaign ID: ${_this.state.campaignId}`)
+      console.log(`Player latitude: ${_this.state.latitude}`)
+      console.log(`Player longitude: ${_this.state.longitude}`)
+      console.log(`Player address: ${_this.state.playerAddr}`)
+
+      const body = {
+        playerInfo: {
+          playerAddr: _this.state.playerAddr,
+          playerLat: _this.state.latitude,
+          playerLng: _this.state.longitude,
+          campaignId: _this.state.campaignId
+        }
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }
+
+      const SERVER = process.env.SERVER
+
+      const data = await fetch(`${SERVER}/play/claim`, options)
+      const directions = await data.json()
+      console.log(directions)
+    } catch (err) {
+      console.error('Error in handleCollect()')
+      throw err
+    }
   }
 
   // Gets current GPS location of the user device
@@ -94,6 +135,11 @@ class Play extends React.Component {
 
   async componentDidMount () {
     const campaignId = _this.handleCampaign()
+
+    _this.setState({
+      campaignId
+    })
+
     _this.handleDrop(campaignId)
   }
 
