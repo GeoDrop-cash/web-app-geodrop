@@ -76,6 +76,8 @@ class Play extends React.Component {
 
       const { latitude, longitude } = coordinates.coords
 
+      _this.handleLog(`player: lat: ${latitude}, lng: ${longitude}`)
+
       _this.setState({
         latitude,
         longitude,

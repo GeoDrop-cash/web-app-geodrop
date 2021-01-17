@@ -51,28 +51,29 @@ class CashDropMap extends React.Component {
                   {map => {
                     map.on('click', e => {
                       const { lat, lng } = e.latlng
-                      let marker = L.marker([lat, lng], {
+                      const marker = L.marker([lat, lng], {
                         icon: icon,
                         draggable: true,
                         interactive: true
-                      })
-                      .addTo(map)
-                      let geoJsonData = {
-                        "type": "Feature",
-                        "properties": {
-                          "name": "sample name",
-                          "popupContent": "sample popup content"
+                      }).addTo(map)
+                      const geoJsonData = {
+                        type: 'Feature',
+                        properties: {
+                          name: 'sample name',
+                          popupContent: 'sample popup content'
                         },
-                        "geometry": {
-                          "type": "Point",
-                          "coordinates": [lat, lng]
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [lat, lng]
                         }
                       }
-                      let geoJson = marker.toGeoJSON(6)
-                      console.log("geoJson:", geoJson)
+                      const geoJson = marker.toGeoJSON(6)
+                      console.log('geoJson:', geoJson)
                       marker
-                      .bindPopup(`<p>${geoJsonData.properties.popupContent}</p>`)
-                      .openPopup()
+                        .bindPopup(
+                          `<p>${geoJsonData.properties.popupContent}</p>`
+                        )
+                        .openPopup()
                     })
 
                     // Create a handle to the map object after its been rendered.
