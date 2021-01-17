@@ -36,22 +36,18 @@ class Play extends React.Component {
   render () {
     const { showTerminal, output, dropFound } = _this.state
     return (
-      <Content
-        title='Play'
-        subTitle='Play'
-        browserTitle='Play'
-      >
+      <Content title="Play" subTitle="Play" browserTitle="Play">
         <Row>
           <Col xs={12}>
-            <Box className='border-none'>
+            <Box className="border-none">
               <span>
                 {showTerminal && (
                   <textarea
-                    id='playTerminal'
-                    className='playTerminal'
-                    name='ipfsTerminal'
-                    rows='15'
-                    cols='50'
+                    id="playTerminal"
+                    className="playTerminal"
+                    name="ipfsTerminal"
+                    rows="15"
+                    cols="50"
                     readOnly
                     value={`${output ? `${output}>` : '>'}`}
                   />
@@ -59,16 +55,15 @@ class Play extends React.Component {
               </span>
             </Box>
           </Col>
-          <Col xs={12} className='text-center'>
+          <Col xs={12} className="text-center">
             <Button
-              text='Collect'
-              type='primary'
-              className='btn-lg'
+              text="Collect"
+              type="primary"
+              className="btn-lg"
               disabled={!dropFound}
             />
           </Col>
         </Row>
-
       </Content>
     )
   }
@@ -95,9 +90,9 @@ class Play extends React.Component {
     }
   }
 
-  componentDidMount () {
-    _this.handleDrop()
-    _this.handleCampaign()
+  async componentDidMount () {
+    const campaignId = _this.handleCampaign()
+    _this.handleDrop(campaignId)
   }
 
   // Adds a line to the terminal
@@ -115,7 +110,7 @@ class Play extends React.Component {
   // Keeps the terminal scrolled to the last line
   keepScrolled () {
     try {
-    // Keeps scrolled to the bottom
+      // Keeps scrolled to the bottom
       var textarea = document.getElementById('playTerminal')
       if (textarea) {
         textarea.scrollTop = textarea.scrollHeight
@@ -126,12 +121,20 @@ class Play extends React.Component {
     }
   }
 
-  handleDrop () {
+  handleDrop (campaignId) {
     _this.handleLog('Get Current Position...')
     _this.msgInterval = setInterval(async () => {
       try {
         // Get current user position
         const { latitude, longitude } = await _this.getCurrentPosition()
+
+        const playerPosition = {
+          latitude,
+          longitude
+        }
+        // Get Directions
+        const directions = await _this.getDirections(campaignId, playerPosition)
+        console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
 
         // Validate the current position
         if (!latitude || !longitude) {
@@ -139,9 +142,10 @@ class Play extends React.Component {
           return
         }
 
-        const { distance, direction } = await _this.getDirections()
+        const { distance, direction } = directions
         if (!distance || !direction) {
           _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
+          return
         }
         // Validates if we are in an allowed distance
         // to pick up a drop
@@ -152,11 +156,11 @@ class Play extends React.Component {
           _this.handleLog('You can collect this drop.')
           return
         }
-        _this.handleLog(`Drop is ${distance} meters in a ${direction} direction`)
+        _this.handleLog(`Closest Drop: ${directions.distance} meters in a ${directions.direction} direction.`)
       } catch (error) {
         console.error(error)
       }
-    }, 3000)
+    }, 10000)
   }
 
   // Obtains the info of the campaign
@@ -168,38 +172,40 @@ class Play extends React.Component {
         return
       }
       console.log('Campaign to collect :', campaign)
-    } catch (error) {
-    }
+
+      return campaign._id
+    } catch (error) {}
   }
 
-  async getDirections () {
+  // Query the server for directions to the neaerest Drop, for the selected
+  // Campaign ID.
+  async getDirections (campaignId, playerPosition) {
     try {
-      console.log('Get Directions')
-      const { latitude, longitude } = _this.state
-      const { campaign } = _this.props.menuNavigation.data
-
-      const SERVER = process.env.SERVER
+      const body = {
+        playerInfo: {
+          campaignId,
+          lat: playerPosition.latitude,
+          lng: playerPosition.longitude
+        }
+      }
 
       const options = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          playerInfo: {
-            campaignId: campaign._id,
-            lat: latitude,
-            lng: longitude
-          }
-        })
+        body: JSON.stringify(body)
       }
+
+      const SERVER = process.env.SERVER
 
       const data = await fetch(`${SERVER}/play/directions`, options)
       const directions = await data.json()
-      console.log(directions)
+      // console.log(directions)
+
       return directions
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.error('Error in getDirections()')
       return false
     }
   }

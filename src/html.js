@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 // import { withPrefix, Link } from 'gatsby'
 
 // window && typeof window !== 'undefined' && window.test = 'testing'
-import Logo from './images/purelypeer-splash.jpg'
+import Logo from './images/purelypeer-splash.png'
 export default function HTML (props) {
   return (
     <html {...props.htmlAttributes}>
@@ -44,7 +44,7 @@ export default function HTML (props) {
           id='___splash'
           style={{
             alignItems: 'center',
-            backgroundColor: '#0AC18E',
+            backgroundColor: 'white',
             display: 'flex',
             justifyContent: 'center',
             position: 'absolute',
