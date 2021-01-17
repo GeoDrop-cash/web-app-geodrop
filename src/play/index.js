@@ -30,7 +30,7 @@ class Play extends React.Component {
     }
     _this = this
     this.msgInterval = null
-    this.distanceToCollect = 10
+    this.distanceToCollect = 100
   }
 
   render () {
