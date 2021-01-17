@@ -11,6 +11,7 @@ import { Content, Box, Row, Col } from 'adminlte-2-react'
 import ExploreMap from './map'
 import ExploreTable from './table'
 import PropTypes from 'prop-types'
+import fetch from 'isomorphic-fetch'
 
 import './explore.css'
 let _this
@@ -110,12 +111,12 @@ class Explore extends React.Component {
     }, 200)
   }
 
-  // Hides the splash 1.5 secs after loading all components
+  // Hides the splash 3 secs after loading all components
   hideSplash () {
     setTimeout(() => {
       const splash = document.getElementById('___splash')
       splash.style.display = 'none'
-    }, 1500)
+    }, 3000)
   }
 
   // Verifies if the user location has been obtained
@@ -133,18 +134,45 @@ class Explore extends React.Component {
     })
   }
 
-  handleShowCampaign (campaign) {
+  async handleShowCampaign (campaign) {
     try {
       const { lat, long } = campaign
-
+      // Obtains the first drop of the campaign 
+      const drop = await _this.getDrop(campaign.drops[0])
       _this.setState({
         coords: {
-          lat,
-          long
+          lat: drop.lat,
+          long: drop.lng
         }
       })
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  async getDrop (dropId) {
+    try {
+      const SERVER = process.env.SERVER
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      const data = await fetch(`${SERVER}/drops/${dropId}`, options)
+      const drops = await data.json()
+
+      console.log('drops', drops)
+      if (!drops && drops.drops) {
+        throw new Error('drops not found!')
+      }
+      return drops.drop
+    } catch (error) {
+      _this.setState({
+        inFetch: false,
+        errMsg: error.message
+      })
     }
   }
 }
