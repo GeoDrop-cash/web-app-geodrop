@@ -37,54 +37,49 @@ const { Item } = Sidebar
 const MenuComponents = props => {
   return [
     {
-      key: 'CashDrop',
-      component: <CashDrop key='CashDrop' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='CashDrop' text='CashDrop' />
-      )
-    },
-    {
       active: true,
       key: 'Explore',
-      component: <Explore key='Explore' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='Explore' text='Explore' />
-      )
+      component: <Explore key="Explore" {...props} />,
+      menuItem: <Item icon="fas-cog" key="Explore" text="Explore" />
     },
     {
       key: 'Play',
-      component: <Play key='Play' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='Play' text='Play' />
-      )
+      component: <Play key="Play" {...props} />,
+      menuItem: <Item icon="fas-cog" key="Play" text="Play" />
+    },
+    {
+      key: 'CashDrop',
+      component: <CashDrop key="CashDrop" {...props} />,
+      menuItem: <Item icon="fas-cog" key="CashDrop" text="CashDrop" />
     },
     {
       key: 'Tokens',
-      component: <Tokens key='Tokens' {...props} />,
-      menuItem: <Item icon='fas-coins' key='Tokens' text='Tokens' />
+      component: <Tokens key="Tokens" {...props} />,
+      menuItem: <Item icon="fas-coins" key="Tokens" text="Tokens" />
     },
 
     {
       key: 'Wallet',
-      component: <Wallet key='Wallet' {...props} />,
-      menuItem: <Item icon='fa-wallet' key='Wallet' text='Wallet' />
-    },
-    {
-      key: 'Configure',
-      component: <Configure key='Configure' {...props} />,
-      menuItem: <Item icon='fas-cog' key='Configure' text='Configure' />
+      component: <Wallet key="Wallet" {...props} />,
+      menuItem: <Item icon="fa-wallet" key="Wallet" text="Wallet" />
     },
     {
       key: 'Send/Receive BCH',
-      component: <SendReceive key='Send/Receive BCH' {...props} />,
+      component: <SendReceive key="Send/Receive BCH" {...props} />,
       menuItem: (
         <Item
-          icon='fa-exchange-alt'
-          key='Send/Receive BCH'
-          text='Send/Receive BCH'
+          icon="fa-exchange-alt"
+          key="Send/Receive BCH"
+          text="Send/Receive BCH"
         />
       )
     },
+    {
+      key: 'Configure',
+      component: <Configure key="Configure" {...props} />,
+      menuItem: <Item icon="fas-cog" key="Configure" text="Configure" />
+    }
+
     /*     {
       key: 'TX History',
       component: <TXHistory key='TX History' {...props} />,
@@ -92,34 +87,34 @@ const MenuComponents = props => {
         <Item icon='fas-cog' key='TX History' text='TX History' />
       )
     }, */
-    {
-      key: 'Demo Component',
-      component: <DemoComponent key='Demo Component' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='Demo Component' text='Demo Component' />
-      )
-    },
-    {
-      key: 'View1',
-      component: <View1 key='View1' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='View1' text='View1' />
-      )
-    },
-    {
-      key: 'View2',
-      component: <View2 key='View2' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='View2' text='View2' />
-      )
-    },
-    {
-      key: 'View3',
-      component: <View3 key='View3' {...props} />,
-      menuItem: (
-        <Item icon='fas-cog' key='View3' text='View3' />
-      )
-    }
+    // {
+    //   key: 'Demo Component',
+    //   component: <DemoComponent key='Demo Component' {...props} />,
+    //   menuItem: (
+    //     <Item icon='fas-cog' key='Demo Component' text='Demo Component' />
+    //   )
+    // },
+    // {
+    //   key: 'View1',
+    //   component: <View1 key='View1' {...props} />,
+    //   menuItem: (
+    //     <Item icon='fas-cog' key='View1' text='View1' />
+    //   )
+    // },
+    // {
+    //   key: 'View2',
+    //   component: <View2 key='View2' {...props} />,
+    //   menuItem: (
+    //     <Item icon='fas-cog' key='View2' text='View2' />
+    //   )
+    // },
+    // {
+    //   key: 'View3',
+    //   component: <View3 key='View3' {...props} />,
+    //   menuItem: (
+    //     <Item icon='fas-cog' key='View3' text='View3' />
+    //   )
+    // }
   ]
 }
 

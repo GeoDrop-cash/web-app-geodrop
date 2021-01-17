@@ -4,8 +4,8 @@
 */
 
 const config = {
-  title: 'Wallet Demo',
-  titleShort: 'Demo',
+  title: 'GeoDrop.Cash',
+  titleShort: 'GDC',
   balanceText: 'BCH Balance',
   balanceIcon: 'fab-bitcoin',
 
