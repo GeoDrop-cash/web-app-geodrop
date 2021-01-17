@@ -41,7 +41,7 @@ class ExploreTable extends React.Component {
                 </thead>
                 <tbody>
                   {
-                    campaigns.map((val, i) => {
+                    campaigns.length ? campaigns.map((val, i) => {
                       return (
                         <tr key={val.merchant + i}>
                           <td>{val.merchant}</td>
@@ -50,13 +50,27 @@ class ExploreTable extends React.Component {
                               text='Show on Map'
                               type='primary'
                               className='btn-lg table-btn'
-                              onClick={() => _this.showonMap(val)}
+                              onClick={() => _this.showOnMap(val)}
+                            />
+                            <Button
+                              text='Play'
+                              type='primary'
+                              className='btn-lg table-btn'
+                              onClick={() => _this.playCampaign(val)}
                             />
                           </td>
                         </tr>
                       )
                     })
+                      : (
+                        <tr key='campaignsNotFound'>
+                          <td className='text-center'>
+                            {'There are no campaigns yet'}
+                          </td>
+
+                        </tr>)
                   }
+
                 </tbody>
               </table>
             </Box>
@@ -89,8 +103,9 @@ class ExploreTable extends React.Component {
       }
       _this.setState({
         inFetch: false,
-        campaigns: campaigns.campaigns
+        campaigns: _this.filterPaidCampaigns(campaigns.campaigns)
       })
+      console.log()
     } catch (error) {
       _this.setState({
         inFetch: false,
@@ -99,16 +114,51 @@ class ExploreTable extends React.Component {
     }
   }
 
-  showonMap (campaign) {
+  showOnMap (campaign) {
     try {
       console.log('campaigns to locate', campaign)
+      _this.handleScroll()
       _this.props.onShowCampaign(campaign)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Filter the campaigns that has been paid
+  filterPaidCampaigns (campaigns) {
+    const paidCampaigns = []
+    try {
+      if (!campaigns.length) { return campaigns }
+      campaigns.map(val => {
+        if (val.hasBeenPaid) {
+          paidCampaigns.push(val)
+        }
+      })
+      return paidCampaigns
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // Change to the 'Play' view
+  // pass the values of the selected campaign
+  playCampaign (val) {
+    try {
+      console.log('Navigate to play view ')
+      _this.props.menuNavigation.changeTo('Play', { campaign: val })
     } catch (error) {
 
     }
   }
+
+  // Focus the map on the screen
+  handleScroll () {
+    const mapElement = document.getElementsByClassName('explore-map')
+    mapElement[0].scrollIntoView({ behavior: 'smooth' })
+  }
 }
 ExploreTable.propTypes = {
-  onShowCampaign: PropTypes.func
+  onShowCampaign: PropTypes.func,
+  menuNavigation: PropTypes.object
 }
 export default ExploreTable

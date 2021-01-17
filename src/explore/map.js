@@ -50,7 +50,7 @@ class ExploreMap extends React.Component {
         _layerControl._latlng.lng === lng) {
         return null
       }
-      console.log('_layerControl', _layerControl)
+      // console.log('_layerControl', _layerControl)
       // We move to the next point in the map
       if (lat && lng) {
         // Verify is there's a marker already
@@ -73,13 +73,13 @@ class ExploreMap extends React.Component {
     const { latitude, longitude } = _this.state
 
     return (
-      <Row className='chashdrop-map'>
+      <Row className='explore-map'>
         <Col xs={12}>
           {
             latitude && longitude && (
               <Box className='cashdrop-box border-none'>
                 <MapContainer
-                  center={[51.505, -0.09]}
+                  center={[latitude, longitude]}
                   zoom={15}
                   style={{ height: '70vh' }}
                 >
