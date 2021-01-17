@@ -9,8 +9,11 @@
 import React from 'react'
 import { Content, Row, Col, Box, Button } from 'adminlte-2-react'
 import PropTypes from 'prop-types'
+import { Plugins } from '@capacitor/core'
 
 import './play.css'
+
+const { Geolocation } = Plugins
 
 let _this
 class Play extends React.Component {
@@ -20,7 +23,9 @@ class Play extends React.Component {
     this.state = {
       output: '',
       showTerminal: true,
-      foundDrop: false
+      foundDrop: false,
+      longitude: '',
+      latitude: ''
     }
     _this = this
     this.msgInterval = null
@@ -66,6 +71,28 @@ class Play extends React.Component {
     )
   }
 
+  // Gets current GPS location of the user device
+  async getCurrentPosition () {
+    try {
+      console.log('Getting Current Position')
+      const coordinates = await Geolocation.getCurrentPosition()
+      console.log('Current', coordinates)
+
+      const { latitude, longitude } = coordinates.coords
+
+      _this.setState({
+        latitude,
+        longitude,
+        inFetch: false
+      })
+
+      return coordinates.coords
+    } catch (error) {
+      this.props.handleLocation(false)
+      console.error(error)
+    }
+  }
+
   componentDidMount () {
     _this.handleDrop()
     _this.handleCampaign()
@@ -97,12 +124,15 @@ class Play extends React.Component {
   }
 
   handleDrop () {
-    _this.msgInterval = setInterval(() => {
-      _this.handleLog('No pins close by')
-    }, 1000)
+    _this.handleLog('Get Current Position...')
+    _this.msgInterval = setInterval(async () => {
+      const { latitude, longitude } = await _this.getCurrentPosition()
+
+      _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
+    }, 10000)
   }
 
-  // Obtains the info of the campaign 
+  // Obtains the info of the campaign
   // from the 'Explore' view
   handleCampaign () {
     try {
@@ -110,7 +140,7 @@ class Play extends React.Component {
       if (!campaign) {
         return
       }
-      console.log('Campaign to collet :', campaign)
+      console.log('Campaign to collect :', campaign)
     } catch (error) {
     }
   }
