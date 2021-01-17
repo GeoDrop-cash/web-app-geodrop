@@ -10,6 +10,8 @@ import React from 'react'
 import { Content, Box, Row, Col } from 'adminlte-2-react'
 import ExploreMap from './map'
 import ExploreTable from './table'
+import PropTypes from 'prop-types'
+
 import './explore.css'
 let _this
 class Explore extends React.Component {
@@ -50,6 +52,7 @@ class Explore extends React.Component {
                 <Col xs={12} lg={6}>
                   <ExploreTable
                     onShowCampaign={_this.handleShowCampaign}
+                    menuNavigation={_this.props.menuNavigation}
                   />
                 </Col>
               </Row>
@@ -131,17 +134,25 @@ class Explore extends React.Component {
   }
 
   handleShowCampaign (campaign) {
-    const { lat, long } = campaign
-    console.log('lat', lat)
-    console.log('long', long)
+    try {
+      const { drops } = campaign
+      // Obtains the first drop to show on the map
+      // TODO: Add all the pins to the map
+      const { lat, lng } = drops[0]
 
-    _this.setState({
-      coords: {
-        lat,
-        long
-      }
-    })
+      _this.setState({
+        coords: {
+          lat,
+          long: lng
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
-
+Explore.propTypes = {
+  onShowCampaign: PropTypes.func,
+  menuNavigation: PropTypes.object
+}
 export default Explore
