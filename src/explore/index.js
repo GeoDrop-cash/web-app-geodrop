@@ -14,6 +14,12 @@ import PropTypes from 'prop-types'
 import fetch from 'isomorphic-fetch'
 
 import './explore.css'
+
+const BchWallet =
+  typeof window !== 'undefined'
+    ? window.SlpWallet
+    : null
+
 let _this
 class Explore extends React.Component {
   constructor (props) {
@@ -24,6 +30,7 @@ class Explore extends React.Component {
       inFetch: true,
       coords: {}
     }
+    this.BchWallet = BchWallet
   }
 
   render () {
@@ -73,9 +80,9 @@ class Explore extends React.Component {
     )
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     _this.removeWarningElemente()
-
+    await _this.handleCreateWallet()
     _this.hideSplash()
   }
 
@@ -137,7 +144,7 @@ class Explore extends React.Component {
   async handleShowCampaign (campaign) {
     try {
       const { lat, long } = campaign
-      // Obtains the first drop of the campaign 
+      // Obtains the first drop of the campaign
       const drop = await _this.getDrop(campaign.drops[0])
       _this.setState({
         coords: {
@@ -175,9 +182,72 @@ class Explore extends React.Component {
       })
     }
   }
+
+  async handleCreateWallet () {
+    try {
+      const currentWallet = _this.props.walletInfo
+
+      if (currentWallet.mnemonic) {
+        console.warn('Wallet already exists')
+        return
+      }
+
+      const apiToken = currentWallet.JWT
+      const restURL = currentWallet.selectedServer
+      const bchjsOptions = {}
+
+      if (apiToken || restURL) {
+        if (apiToken) {
+          bchjsOptions.apiToken = apiToken
+        }
+        if (restURL) {
+          bchjsOptions.restURL = restURL
+        }
+      }
+
+      const bchWalletLib = new _this.BchWallet(null, bchjsOptions)
+
+      // Update bchjs instances  of minimal-slp-wallet libraries
+      bchWalletLib.tokens.sendBch.bchjs = new bchWalletLib.BCHJS(bchjsOptions)
+      bchWalletLib.tokens.utxos.bchjs = new bchWalletLib.BCHJS(bchjsOptions)
+
+      await bchWalletLib.walletInfoPromise // Wait for wallet to be created.
+
+      const walletInfo = bchWalletLib.walletInfo
+      walletInfo.from = 'created'
+
+      Object.assign(currentWallet, walletInfo)
+
+      const myBalance = await bchWalletLib.getBalance()
+
+      const bchjs = bchWalletLib.bchjs
+
+      let currentRate
+
+      if (bchjs.restURL.includes('abc.fullstack')) {
+        currentRate = await bchjs.Price.getBchaUsd() * 100
+      } else {
+        // BCHN price.
+        currentRate = (await bchjs.Price.getUsd()) * 100
+      }
+
+      // console.log("myBalance", myBalance)
+      // Update redux state
+      _this.props.setWalletInfo(currentWallet)
+      _this.props.updateBalance({ myBalance, currentRate })
+      _this.props.setBchWallet(bchWalletLib)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
+
 Explore.propTypes = {
   onShowCampaign: PropTypes.func,
+  walletInfo: PropTypes.object.isRequired,
+  setWalletInfo: PropTypes.func.isRequired,
+  updateBalance: PropTypes.func.isRequired,
+  setBchWallet: PropTypes.func.isRequired,
   menuNavigation: PropTypes.object
 }
 export default Explore
