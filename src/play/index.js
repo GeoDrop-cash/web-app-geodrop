@@ -24,12 +24,13 @@ class Play extends React.Component {
     this.state = {
       output: '',
       showTerminal: true,
-      foundDrop: false,
+      dropFound: false,
       longitude: '',
       latitude: ''
     }
     _this = this
     this.msgInterval = null
+    this.distanceToCollect = 10
   }
 
   render () {
@@ -118,23 +119,50 @@ class Play extends React.Component {
       }
     } catch (error) {
       console.warn(error)
+      return {}
     }
   }
 
   handleDrop (campaignId) {
     _this.handleLog('Get Current Position...')
     _this.msgInterval = setInterval(async () => {
-      const { latitude, longitude } = await _this.getCurrentPosition()
+      try {
+        // Get current user position
+        const { latitude, longitude } = await _this.getCurrentPosition()
 
-      const playerPosition = {
-        latitude,
-        longitude
+        const playerPosition = {
+          latitude,
+          longitude
+        }
+        // Get Directions
+        const directions = await _this.getDirections(campaignId, playerPosition)
+        console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
+
+        // Validate the current position
+        if (!latitude || !longitude) {
+          _this.handleLog('Error getting location')
+          return
+        }
+
+        const { distance, direction } = directions
+        if (!distance || !direction) {
+          _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
+          return
+        }
+
+        // Validates if we are in an allowed distance
+        // to pick up a drop
+        if (distance <= _this.distanceToCollect) {
+          _this.setState({
+            dropFound: true
+          })
+          _this.handleLog('You can collect this drop.')
+          return
+        }
+        _this.handleLog(`Closest Drop: ${directions.distance} meters in a ${directions.direction} direction.`)
+      } catch (error) {
+        console.error(error)
       }
-
-      const directions = await _this.getDirections(campaignId, playerPosition)
-      console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
-
-      _this.handleLog(`Closest Drop: ${directions.distance} meters in a ${directions.direction} direction.`)
     }, 10000)
   }
 
