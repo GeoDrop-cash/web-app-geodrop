@@ -77,6 +77,8 @@ class Play extends React.Component {
 
       const { latitude, longitude } = coordinates.coords
 
+      _this.handleLog(`player: lat: ${latitude}, lng: ${longitude}`)
+
       _this.setState({
         latitude,
         longitude,
@@ -147,6 +149,7 @@ class Play extends React.Component {
           _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
           return
         }
+
         // Validates if we are in an allowed distance
         // to pick up a drop
         if (distance <= _this.distanceToCollect) {
@@ -206,7 +209,7 @@ class Play extends React.Component {
       return directions
     } catch (err) {
       console.error('Error in getDirections()')
-      return false
+      throw err
     }
   }
 
