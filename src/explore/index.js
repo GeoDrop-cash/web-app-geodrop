@@ -135,15 +135,12 @@ class Explore extends React.Component {
 
   handleShowCampaign (campaign) {
     try {
-      const { drops } = campaign
-      // Obtains the first drop to show on the map
-      // TODO: Add all the pins to the map
-      const { lat, lng } = drops[0]
+      const { lat, long } = campaign
 
       _this.setState({
         coords: {
           lat,
-          long: lng
+          long
         }
       })
     } catch (error) {
