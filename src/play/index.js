@@ -29,7 +29,7 @@ class Play extends React.Component {
       latitude: '',
 
       // Hard coding this value for testing.
-      playerAddr: 'simpleledger:qqlrzp23w08434twmvr4fxw672whkjy0pyxpgpyg0n',
+      playerAddr: 'simpleledger:qzsavwau7kuxg4esklg7av77cfjpcu566ysc38tsqf',
       campaignId: ''
     }
     _this = this
