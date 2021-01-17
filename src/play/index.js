@@ -141,6 +141,8 @@ class Play extends React.Component {
     })
 
     _this.handleDrop(campaignId)
+
+    console.log(_this.props.walletInfo)
   }
 
   // Adds a line to the terminal
@@ -259,12 +261,25 @@ class Play extends React.Component {
     }
   }
 
+  componentWillUpdate () {
+    // Update player address
+    const { playerAddr } = _this.state
+    const { slpAddress } = _this.props.walletInfo
+    if (playerAddr !== slpAddress) {
+      console.log(`Player Address :${slpAddress}`)
+      _this.setState({
+        playerAddr: slpAddress
+      })
+    }
+  }
+
   componentWillUnmount () {
     clearInterval(_this.msgInterval)
   }
 }
 Play.propTypes = {
   onShowCampaign: PropTypes.func,
-  menuNavigation: PropTypes.object
+  menuNavigation: PropTypes.object,
+  walletInfo: PropTypes.object.isRequired
 }
 export default Play
