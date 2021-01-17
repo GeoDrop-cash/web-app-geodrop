@@ -10,6 +10,7 @@ import React from 'react'
 import { Content, Row, Col, Box, Button } from 'adminlte-2-react'
 import PropTypes from 'prop-types'
 import { Plugins } from '@capacitor/core'
+import fetch from 'isomorphic-fetch'
 
 import './play.css'
 
@@ -23,12 +24,13 @@ class Play extends React.Component {
     this.state = {
       output: '',
       showTerminal: true,
-      foundDrop: false,
+      dropFound: false,
       longitude: '',
       latitude: ''
     }
     _this = this
     this.msgInterval = null
+    this.distanceToCollect = 10
   }
 
   render () {
@@ -120,16 +122,41 @@ class Play extends React.Component {
       }
     } catch (error) {
       console.warn(error)
+      return {}
     }
   }
 
   handleDrop () {
     _this.handleLog('Get Current Position...')
     _this.msgInterval = setInterval(async () => {
-      const { latitude, longitude } = await _this.getCurrentPosition()
+      try {
+        // Get current user position
+        const { latitude, longitude } = await _this.getCurrentPosition()
 
-      _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
-    }, 10000)
+        // Validate the current position
+        if (!latitude || !longitude) {
+          _this.handleLog('Error getting location')
+          return
+        }
+
+        const { distance, direction } = await _this.getDirections()
+        if (!distance || !direction) {
+          _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
+        }
+        // Validates if we are in an allowed distance
+        // to pick up a drop
+        if (distance <= _this.distanceToCollect) {
+          _this.setState({
+            dropFound: true
+          })
+          _this.handleLog('You can collect this drop.')
+          return
+        }
+        _this.handleLog(`Drop is ${distance} meters in a ${direction} direction`)
+      } catch (error) {
+        console.error(error)
+      }
+    }, 3000)
   }
 
   // Obtains the info of the campaign
@@ -142,6 +169,38 @@ class Play extends React.Component {
       }
       console.log('Campaign to collect :', campaign)
     } catch (error) {
+    }
+  }
+
+  async getDirections () {
+    try {
+      console.log('Get Directions')
+      const { latitude, longitude } = _this.state
+      const { campaign } = _this.props.menuNavigation.data
+
+      const SERVER = process.env.SERVER
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          playerInfo: {
+            campaignId: campaign._id,
+            lat: latitude,
+            lng: longitude
+          }
+        })
+      }
+
+      const data = await fetch(`${SERVER}/play/directions`, options)
+      const directions = await data.json()
+      console.log(directions)
+      return directions
+    } catch (error) {
+      console.log(error)
+      return false
     }
   }
 
