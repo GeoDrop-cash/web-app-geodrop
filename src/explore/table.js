@@ -114,11 +114,11 @@ class ExploreTable extends React.Component {
     }
   }
 
-  showOnMap (campaign) {
+  async showOnMap (campaign) {
     try {
       console.log('campaigns to locate', campaign)
       _this.handleScroll()
-      _this.props.onShowCampaign(campaign)
+      await _this.props.onShowCampaign(campaign)
     } catch (error) {
       console.log(error)
     }
