@@ -107,6 +107,8 @@ class ExploreTable extends React.Component {
       })
       console.log()
     } catch (error) {
+      console.error('Error trying to fetch campaign data from the server: ', error)
+
       _this.setState({
         inFetch: false,
         errMsg: error.message
