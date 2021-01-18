@@ -134,7 +134,7 @@ class Play extends React.Component {
   }
 
   async componentDidMount () {
-    _this.handleLog('Finding the closest drop...')
+    _this.handleLog('Finding the closest Drop...')
 
     const campaignId = _this.handleCampaign()
 
@@ -264,7 +264,7 @@ class Play extends React.Component {
 
       if (data.status > 400) {
         console.log(data)
-        _this.handleLog('No Drops Found!')
+        _this.handleLog('No Drops Found! Select a campaign on the Explore view.')
         _this.handleLog(' ')
       }
 
