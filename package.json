@@ -1,12 +1,11 @@
 {
-  "name": "purelypeer-app",
-  "description": "A Gatsby JS app for playing the PurelyPeer game.",
+  "name": "web-app-geodrop",
+  "description": "A Gatsby JS app for playing the GeoDrop.cash game.",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "contributors": [
-    "Daniel Gonzalez <danielhumgon@gmail.com>",
-    "Andre Cabrera <andrecabrera@protonmail.ch>"
+    "Daniel Gonzalez <danielhumgon@gmail.com>"
   ],
   "scripts": {
     "build": "gatsby build",
@@ -31,10 +30,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PurelyPeer/purelypeer-app"
+    "url": "https://github.com/GeoDrop-cash/web-app-geodrop"
   },
   "bugs": {
-    "url": "https://github.com/PurelyPeer/purelypeer-app/issues"
+    "url": "https://github.com/GeoDrop-cash/web-app-geodrop/issues"
   },
   "devDependencies": {
     "semantic-release": "^17.3.1",
