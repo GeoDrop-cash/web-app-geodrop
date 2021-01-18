@@ -107,6 +107,22 @@ class About extends React.Component {
                   </a>
                 </li>
               </ul>
+              <br></br>
+
+              <h4>Android App</h4>
+              <p>
+                This app can also be downloaded and installed as an Android app.
+              </p>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/GeoDrop-cash/web-app-geodrop/blob/master/geodrop-android.apk"
+                    target="_blank"
+                  >
+                    Android APK File
+                  </a>
+                </li>
+              </ul>
             </Box>
           </Col>
         </Row>
