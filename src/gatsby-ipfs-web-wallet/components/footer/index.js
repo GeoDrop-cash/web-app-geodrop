@@ -21,10 +21,19 @@ class Footer2 extends React.Component {
   render () {
     return (
       <>
-        <section id='footer2'>
-          <Row className='footer-container'>
-            <Col md={12} className='footer-section'>
-              <small><strong>Sponsored By:</strong> FullStack.cash</small>
+        <section id="footer2">
+          <Row className="footer-container">
+            <Col md={12} className="footer-section">
+              <small>
+                <strong>Powered By:</strong>{' '}
+                <a
+                  href="https://fullstack.cash"
+                  target="_blank"
+                  style={{ color: '#000' }}
+                >
+                  FullStack.cash
+                </a>
+              </small>
             </Col>
           </Row>
         </section>
@@ -32,9 +41,7 @@ class Footer2 extends React.Component {
     )
   }
 
-  async componentDidMount () {
-
-  }
+  async componentDidMount () {}
 }
 
 export default Footer2
