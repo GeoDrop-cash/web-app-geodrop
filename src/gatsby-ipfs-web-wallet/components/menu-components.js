@@ -14,7 +14,7 @@ import { Sidebar } from 'adminlte-2-react'
 import DemoComponent from '../../demo-component'
 import View1 from '../../view1'
 import View2 from '../../view2'
-import View3 from '../../view3'
+import About from '../../view3'
 
 import CashDrop from '../../cashdrop'
 import Explore from '../../explore'
@@ -78,7 +78,7 @@ const MenuComponents = props => {
       key: 'Configure',
       component: <Configure key="Configure" {...props} />,
       menuItem: <Item icon="fas-cog" key="Configure" text="Configure" />
-    }
+    },
 
     /*     {
       key: 'TX History',
@@ -108,13 +108,13 @@ const MenuComponents = props => {
     //     <Item icon='fas-cog' key='View2' text='View2' />
     //   )
     // },
-    // {
-    //   key: 'View3',
-    //   component: <View3 key='View3' {...props} />,
-    //   menuItem: (
-    //     <Item icon='fas-cog' key='View3' text='View3' />
-    //   )
-    // }
+    {
+      key: 'About',
+      component: <About key='About' {...props} />,
+      menuItem: (
+        <Item icon='fas-cog' key='About' text='About' />
+      )
+    }
   ]
 }
 
