@@ -60,9 +60,10 @@ class ExploreMap extends React.Component {
           map.removeLayer(_layerControl)
         }
         const layer = L.marker([lat, lng], { id: 1, icon: icon }).addTo(map)
+
         layer.bindPopup(
           /* `<p>Lat: ${lat}, Lng: ${lng}</p>` */
-          `<p>${campaign.tokenName}</p>`
+          `<p>${campaign.tokenName || 'MyPosition'}</p>`
         ).openPopup()
         _layerControl = layer // Store the new marker
 

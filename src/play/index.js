@@ -11,7 +11,7 @@ import { Content, Row, Col, Box, Button } from 'adminlte-2-react'
 import PropTypes from 'prop-types'
 import { Plugins } from '@capacitor/core'
 import fetch from 'isomorphic-fetch'
-
+import PlayMap from './map'
 import './play.css'
 
 const { Geolocation } = Plugins
@@ -30,7 +30,13 @@ class Play extends React.Component {
 
       // Hard coding this value for testing.
       playerAddr: 'simpleledger:qzsavwau7kuxg4esklg7av77cfjpcu566ysc38tsqf',
-      campaignId: ''
+      campaignId: '',
+      hasLocation: true,
+      inFetch: true,
+      coords: {},
+      campaign: {},
+      directions: {}
+
     }
     _this = this
     this.msgInterval = null
@@ -38,12 +44,29 @@ class Play extends React.Component {
   }
 
   render () {
-    const { showTerminal, output, dropFound } = _this.state
+    const {
+      showTerminal,
+      output,
+      dropFound,
+      directions,
+      campaign,
+      latitude,
+      longitude
+    } = _this.state
     return (
       <Content title="Play" subTitle="Play" browserTitle="Play">
         <Row>
-          <Col xs={12}>
-            <Box className="border-none">
+          <Col xs={12} lg={6}>
+            <PlayMap
+              handleLocation={_this.onLocation}
+              handleMapInfo={_this.onMapInfo}
+              coordsToShearch={directions}
+              campaign={campaign}
+              playerPosition={{ latitude, longitude }}
+            />
+          </Col>
+          <Col xs={12} lg={6}>
+            <Box className="border-none terminal-box">
               <span>
                 {showTerminal && (
                   <textarea
@@ -57,16 +80,16 @@ class Play extends React.Component {
                   />
                 )}
               </span>
+              <Col xs={12} className="text-center">
+                <Button
+                  text="Collect"
+                  type="primary"
+                  className="btn-lg mt-2"
+                  disabled={!dropFound}
+                  onClick={_this.handleCollect}
+                />
+              </Col>
             </Box>
-          </Col>
-          <Col xs={12} className="text-center">
-            <Button
-              text="Collect"
-              type="primary"
-              className="btn-lg"
-              disabled={!dropFound}
-              onClick={_this.handleCollect}
-            />
           </Col>
         </Row>
       </Content>
@@ -102,7 +125,7 @@ class Play extends React.Component {
 
       const data = await fetch(`${SERVER}/play/claim`, options)
       const directions = await data.json()
-      console.log(directions)
+      console.log('directions', directions)
     } catch (err) {
       console.error('Error in handleCollect()')
       throw err
@@ -134,17 +157,41 @@ class Play extends React.Component {
   }
 
   async componentDidMount () {
-    _this.handleLog('Finding the closest Drop...')
+    try {
+      _this.handleLog('Finding the closest Drop...')
 
-    const campaignId = _this.handleCampaign()
+      const campaign = _this.handleCampaign()
+      const campaignId = campaign ? campaign._id : ''
 
-    _this.setState({
-      campaignId
-    })
+      _this.setState({
+        campaignId
+      })
+      await _this.handleShowCampaign(campaign)
+      _this.handleDrop(campaignId)
 
-    _this.handleDrop(campaignId)
+      await _this.getNearestDrop(campaignId)
+    } catch (error) {
+      // prevention
+    }
+  }
 
-    console.log(_this.props.walletInfo)
+  // Finds the nearest drop 
+  // to the player location
+  async getNearestDrop (campaignId) {
+    try {
+      const { latitude, longitude } = await _this.getCurrentPosition()
+      const playerPosition = {
+        latitude,
+        longitude
+      }
+      const directions = await _this.getDirections(campaignId, playerPosition)
+      _this.setState({
+        directions: directions
+      })
+      return directions.nearestDrop
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // Adds a line to the terminal
@@ -187,7 +234,7 @@ class Play extends React.Component {
         // Get Directions
         const directions = await _this.getDirections(campaignId, playerPosition)
         // console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
-
+        _this.setState({ directions })
         // Validate the current position
         if (!latitude || !longitude) {
           _this.handleLog('Error getting location')
@@ -232,8 +279,10 @@ class Play extends React.Component {
         return
       }
       console.log('Campaign to collect :', campaign)
-
-      return campaign._id
+      _this.setState({
+        campaign
+      })
+      return campaign
     } catch (error) {}
   }
 
@@ -292,6 +341,32 @@ class Play extends React.Component {
 
   componentWillUnmount () {
     clearInterval(_this.msgInterval)
+  }
+
+  // Verifies if the user location has been obtained
+  onLocation (hasLocation) {
+    _this.setState({
+      hasLocation,
+      inFetch: false
+    })
+  }
+
+  // Function to receive information sent from the Map component
+  onMapInfo (info) {
+    _this.setState({
+      mapInfo: info
+    })
+  }
+
+  async handleShowCampaign (campaign) {
+    try {
+      _this.setState(prevState => ({
+        ...prevState,
+        campaign
+      }))
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 Play.propTypes = {

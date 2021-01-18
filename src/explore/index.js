@@ -12,8 +12,10 @@ import ExploreMap from './map'
 import ExploreTable from './table'
 import PropTypes from 'prop-types'
 import fetch from 'isomorphic-fetch'
+import { Plugins } from '@capacitor/core'
 
 import './explore.css'
+const { Geolocation } = Plugins
 
 const BchWallet =
   typeof window !== 'undefined'
@@ -143,6 +145,7 @@ class Explore extends React.Component {
     })
   }
 
+  /*   //Searchs for the location of the first drop
   async handleShowCampaign (campaign) {
     try {
       const { lat, long } = campaign
@@ -157,6 +160,48 @@ class Explore extends React.Component {
         campaign
       }))
     } catch (error) {
+      console.error(error)
+    }
+  } */
+  // Searchs for the location of the nearest drop
+  async handleShowCampaign (campaign) {
+    try {
+      if (!campaign._id) return
+      const { latitude, longitude } = await _this.getNearestDrop(campaign._id)
+
+      _this.setState(prevState => ({
+        ...prevState,
+        coords: {
+          lat: latitude,
+          long: longitude
+        },
+        campaign
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // Gets current GPS location of the user device
+  async getCurrentPosition () {
+    try {
+      // console.log('Getting Current Position')
+      const coordinates = await Geolocation.getCurrentPosition()
+      // console.log('Current', coordinates)
+
+      const { latitude, longitude } = coordinates.coords
+
+      // _this.handleLog(`player: lat: ${latitude}, lng: ${longitude}`)
+
+      _this.setState({
+        latitude,
+        longitude,
+        inFetch: false
+      })
+
+      return coordinates.coords
+    } catch (error) {
+      this.props.handleLocation(false)
       console.error(error)
     }
   }
@@ -242,6 +287,66 @@ class Explore extends React.Component {
       _this.props.setBchWallet(bchWalletLib)
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  // Finds the nearest drop to the player
+  // location
+  async getNearestDrop (campaignId) {
+    try {
+      const { latitude, longitude } = await _this.getCurrentPosition()
+      const playerPosition = {
+        latitude,
+        longitude
+      }
+      const directions = await _this.getDirections(campaignId, playerPosition)
+      _this.setState({
+        directions: directions
+      })
+      return directions.nearestDrop
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // Query the server for directions to the neaerest Drop, for the selected
+  // Campaign ID.
+  async getDirections (campaignId, playerPosition) {
+    try {
+      const body = {
+        playerInfo: {
+          campaignId,
+          lat: playerPosition.latitude,
+          lng: playerPosition.longitude
+        }
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }
+
+      const SERVER = process.env.SERVER
+
+      const data = await fetch(`${SERVER}/play/directions`, options)
+      // console.log(data)
+
+      if (data.status > 400) {
+        console.log(data)
+        _this.handleLog('No Drops Found! Select a campaign on the Explore view.')
+        _this.handleLog(' ')
+      }
+
+      const directions = await data.json()
+      // console.log(directions)
+
+      return directions
+    } catch (err) {
+      console.error('Error in getDirections(): ', err)
+      throw err
     }
   }
 }

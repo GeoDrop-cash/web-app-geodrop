@@ -44,7 +44,7 @@ class ExploreTable extends React.Component {
                     campaigns.length ? campaigns.map((val, i) => {
                       return (
                         <tr key={val.tokenName + i}>
-                          <td>{val.tokenName}</td>
+                          <td style={{ width: '50%' }}>{val.tokenName}</td>
                           <td>
                             <Button
                               text='Show on Map'
