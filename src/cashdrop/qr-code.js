@@ -48,7 +48,7 @@ class CashDropQr extends React.Component {
 
           </Col>
 
-          <Col sm={12} className='text-center '>
+          <Col sm={12} className='text-center qr-btn-container'>
             <Row>
               <Col sm={12} lg={6}>
                 {showPayBtn && (
@@ -159,7 +159,7 @@ class CashDropQr extends React.Component {
     }
   }
 
-  // Validates if the balance is enough 
+  // Validates if the balance is enough
   // to create the tokens
   async validateBalance () {
     const bchWalletLib = _this.props.bchWallet
