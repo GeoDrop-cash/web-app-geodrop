@@ -112,9 +112,9 @@ class Play extends React.Component {
   // Gets current GPS location of the user device
   async getCurrentPosition () {
     try {
-      console.log('Getting Current Position')
+      // console.log('Getting Current Position')
       const coordinates = await Geolocation.getCurrentPosition()
-      console.log('Current', coordinates)
+      // console.log('Current', coordinates)
 
       const { latitude, longitude } = coordinates.coords
 
@@ -134,6 +134,8 @@ class Play extends React.Component {
   }
 
   async componentDidMount () {
+    _this.handleLog('Finding the closest drop...')
+
     const campaignId = _this.handleCampaign()
 
     _this.setState({
@@ -172,7 +174,7 @@ class Play extends React.Component {
   }
 
   handleDrop (campaignId) {
-    _this.handleLog('Get Current Position...')
+    // _this.handleLog('Get Current Position...')
     _this.msgInterval = setInterval(async () => {
       try {
         // Get current user position
@@ -184,17 +186,19 @@ class Play extends React.Component {
         }
         // Get Directions
         const directions = await _this.getDirections(campaignId, playerPosition)
-        console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
+        // console.log(`directions: ${JSON.stringify(directions, null, 2)}`)
 
         // Validate the current position
         if (!latitude || !longitude) {
           _this.handleLog('Error getting location')
+          _this.handleLog(' ')
           return
         }
 
         const { distance, direction } = directions
         if (!distance || !direction) {
           _this.handleLog(`No pins close by : [ ${latitude} , ${longitude} ]`)
+          _this.handleLog(' ')
           return
         }
 
@@ -205,9 +209,14 @@ class Play extends React.Component {
             dropFound: true
           })
           _this.handleLog('You can collect this drop.')
+          _this.handleLog(`You are ${distance} meters away from the drop.`)
+          _this.handleLog(' ')
           return
         }
-        _this.handleLog(`Closest Drop: ${directions.distance} meters in a ${directions.direction} direction.`)
+
+        _this.handleLog(`Closest Drop: ${distance} meters in a ${directions.direction} direction.`)
+
+        _this.handleLog(' ')
       } catch (error) {
         console.error(error)
       }
@@ -251,12 +260,20 @@ class Play extends React.Component {
       const SERVER = process.env.SERVER
 
       const data = await fetch(`${SERVER}/play/directions`, options)
+      // console.log(data)
+
+      if (data.status > 400) {
+        console.log(data)
+        _this.handleLog('No Drops Found!')
+        _this.handleLog(' ')
+      }
+
       const directions = await data.json()
       // console.log(directions)
 
       return directions
     } catch (err) {
-      console.error('Error in getDirections()')
+      console.error('Error in getDirections(): ', err)
       throw err
     }
   }
