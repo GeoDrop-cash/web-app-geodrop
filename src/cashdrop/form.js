@@ -107,6 +107,8 @@ class CashDropForm extends React.Component {
                     handleOnHide={_this.hideQr}
                     amount={amount}
                     address={address}
+                    bchWallet={_this.props.bchWallet}
+                    updateBalance={_this.props.updateBalance}
                   />
                 )}
               </Col>
@@ -261,6 +263,8 @@ class CashDropForm extends React.Component {
 }
 CashDropForm.propTypes = {
   mapInfo: PropTypes.object,
-  handlePinCoordinates: PropTypes.func.isRequired // Function to get the pin data from the map
+  handlePinCoordinates: PropTypes.func.isRequired, // Function to get the pin data from the map
+  bchWallet: PropTypes.object,
+  updateBalance: PropTypes.func.isRequired
 }
 export default CashDropForm

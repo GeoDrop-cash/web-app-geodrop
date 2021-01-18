@@ -6,6 +6,8 @@ import React from 'react'
 import { Row, Col, Content, Box } from 'adminlte-2-react'
 import CashDropForm from './form'
 import CashDropMap from './map'
+import PropTypes from 'prop-types'
+
 import './cashdrop.css'
 let _this
 class CashDrop extends React.Component {
@@ -45,6 +47,8 @@ class CashDrop extends React.Component {
                 <CashDropForm
                   mapInfo={mapInfo}
                   handlePinCoordinates={_this.state.handlePinCoordinates}
+                  bchWallet={_this.props.bchWallet}
+                  updateBalance={_this.props.updateBalance}
                 />
               </Col>
             </Row>
@@ -90,5 +94,9 @@ class CashDrop extends React.Component {
     })
   }
 }
+CashDrop.propTypes = {
+  bchWallet: PropTypes.object,
+  updateBalance: PropTypes.func.isRequired
 
+}
 export default CashDrop
