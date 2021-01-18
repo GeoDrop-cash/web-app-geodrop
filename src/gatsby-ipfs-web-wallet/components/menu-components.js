@@ -14,7 +14,7 @@ import { Sidebar } from 'adminlte-2-react'
 import DemoComponent from '../../demo-component'
 import View1 from '../../view1'
 import View2 from '../../view2'
-import About from '../../view3'
+import About from '../../about'
 
 import CashDrop from '../../cashdrop'
 import Explore from '../../explore'
