@@ -38,10 +38,10 @@ class ExploreMap extends React.Component {
       console.log('Explore.MyComponent is mounted')
       // Get map
       const map = useMap()
-      console.log("explore map props", props)
+      console.log('explore map props', props)
 
       // Get geolocation from props
-      const { lat, lng } = props
+      const { lat, lng, campaign } = props
       if (!lat || !lng) { return null }
 
       // Validates if we are in the position
@@ -61,7 +61,8 @@ class ExploreMap extends React.Component {
         }
         const layer = L.marker([lat, lng], { id: 1, icon: icon }).addTo(map)
         layer.bindPopup(
-          `<p>Lat: ${lat}, Lng: ${lng}</p>`
+          /* `<p>Lat: ${lat}, Lng: ${lng}</p>` */
+          `<p>${campaign.tokenName}</p>`
         ).openPopup()
         _layerControl = layer // Store the new marker
 
@@ -75,7 +76,7 @@ class ExploreMap extends React.Component {
 
   render () {
     const { latitude, longitude } = _this.state
-
+    const { campaign } = _this.props
     return (
       <Row className='explore-map'>
         <Col xs={12}>
@@ -91,7 +92,11 @@ class ExploreMap extends React.Component {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                   />
-                  <MyComponent lat={latitude} lng={longitude} />
+                  <MyComponent
+                    lat={latitude}
+                    lng={longitude}
+                    campaign={campaign}
+                  />
                 </MapContainer>
               </Box>
             )
@@ -170,6 +175,7 @@ class ExploreMap extends React.Component {
 ExploreMap.propTypes = {
   handleLocation: PropTypes.func.isRequired, // Function that notifies if the user location has been obtained
   handleMapInfo: PropTypes.func.isRequired, // Function to send the info to the parent component
-  coordsToShearch: PropTypes.object
+  coordsToShearch: PropTypes.object,
+  campaign: PropTypes.object // Selected Campaign
 }
 export default ExploreMap

@@ -28,13 +28,14 @@ class Explore extends React.Component {
     this.state = {
       hasLocation: true,
       inFetch: true,
-      coords: {}
+      coords: {},
+      campaign: {}
     }
     this.BchWallet = BchWallet
   }
 
   render () {
-    const { inFetch, hasLocation, coords } = _this.state
+    const { inFetch, hasLocation, coords, campaign } = _this.state
 
     return (
       <>
@@ -55,6 +56,7 @@ class Explore extends React.Component {
                     handleLocation={_this.onLocation}
                     handleMapInfo={_this.onMapInfo}
                     coordsToShearch={coords}
+                    campaign={campaign}
                   />
                 </Col>
                 <Col xs={12} lg={6}>
@@ -146,12 +148,14 @@ class Explore extends React.Component {
       const { lat, long } = campaign
       // Obtains the first drop of the campaign
       const drop = await _this.getDrop(campaign.drops[0])
-      _this.setState({
+      _this.setState(prevState => ({
+        ...prevState,
         coords: {
           lat: drop.lat,
           long: drop.lng
-        }
-      })
+        },
+        campaign
+      }))
     } catch (error) {
       console.error(error)
     }
