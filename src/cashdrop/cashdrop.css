@@ -56,12 +56,23 @@
   font-size: 16px;
 }
 
+.qr-btn-send , .qr-btn-close{
+    width: 70%;
+}
+.qr-btn-close2{
+  width: 35%;
+}
+.success-color{
+  color:green;
+}
+
 @media screen and (max-width: 700px) {
     .cashdrop-form .cashdrop-box {
       height: auto!important;
       display: block!important;
   
     }
+
   }
   @media screen and (max-height: 700px) {
     .cashdrop-form .cashdrop-box {
@@ -70,5 +81,12 @@
   
     }
   }
-
+  @media screen and (min-width: 1200px) {
+    .qr-btn-send{
+      float: right!important
+    }
+    .qr-btn-close{
+      float: left!important
+    }
+  }
 
