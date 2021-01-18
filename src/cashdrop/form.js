@@ -149,6 +149,8 @@ class CashDropForm extends React.Component {
       console.log('Pin coordinates :', pinCoords)
       const cashdropPins = pinCoords.length
 
+      const sats = cashdropPins * 10000
+
       const {
         cashdropTokenName,
         cashdropTokenTicker,
@@ -172,7 +174,8 @@ class CashDropForm extends React.Component {
             tokenName: cashdropTokenName,
             tokenTicker: cashdropTokenTicker,
             tokenUrl: cashdropTokenUrl,
-            tokenQty: cashdropPins
+            tokenQty: cashdropPins,
+            satsToPay: sats
           }
         })
       }
@@ -185,8 +188,6 @@ class CashDropForm extends React.Component {
       if (!campaign.campaign.bchAddr) {
         throw new Error('Address not found!')
       }
-
-      const sats = cashdropPins * 10000
 
       _this.setState({
         showQr: true,
