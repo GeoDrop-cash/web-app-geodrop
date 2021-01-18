@@ -132,7 +132,7 @@ class ExploreTable extends React.Component {
     try {
       if (!campaigns.length) { return campaigns }
       campaigns.map(val => {
-        if (val.hasBeenPaid) {
+        if (val.hasBeenPaid && val.isActive) {
           paidCampaigns.push(val)
         }
       })
