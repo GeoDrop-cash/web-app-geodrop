@@ -1,0 +1,41 @@
+#play-terminal {
+    width: 100%;
+    border-color: var(--main-color);
+    outline: none;
+}
+.playTerminal{
+    width: 100%;
+    height: 85%;
+    border-color: var(--main-color);
+    outline: none;
+
+}
+.terminal-box{
+    height: 70vh;
+
+}
+
+.terminal-box{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .terminal-box .box-body{
+    width: 100%;
+    height: 100%
+  }
+  @media screen and (max-width: 700px) {
+    .terminal-box {
+      height: auto!important;
+      display: block!important;
+  
+    }
+
+  }
+  @media screen and (max-height: 700px) {
+    .terminal-box {
+      height: auto!important;
+      display: block!important;
+  
+    }
+  }

@@ -1,0 +1,30 @@
+:root {
+    --main-color:#00A74F;
+    --footer-height: 50px;
+  }
+#footer2{
+    width: 100%;
+    /* max-height: 50px; */
+    min-height: var(--footer-height);
+    background-color: var(--main-color);
+    padding-right: 1em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.footer-section{
+    text-align: end;
+    padding-right: 1em;
+    font-size: 125%;
+}
+
+.footer-section strong{
+    margin-right: 7px;
+}
+.footer-container{
+    margin-top: 1em;
+    color: white;
+}
+.components-container{
+  padding-bottom: 4em; 
+}

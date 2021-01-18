@@ -1,0 +1,51 @@
+{
+  "name": "purelypeer-app",
+  "description": "A Gatsby JS app for playing the PurelyPeer game.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Chris Troutner <chris.troutner@gmail.com>",
+  "contributors": [
+    "Daniel Gonzalez <danielhumgon@gmail.com>",
+    "Andre Cabrera <andrecabrera@protonmail.ch>"
+  ],
+  "scripts": {
+    "build": "gatsby build",
+    "build:ipfs": "gatsby build --prefix-paths",
+    "develop": "gatsby develop",
+    "lint": "standard --env mocha --fix",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "@capacitor/android": "^2.4.5",
+    "@capacitor/cli": "^2.4.5",
+    "@capacitor/core": "^2.4.5",
+    "gatsby": "^2.24.82",
+    "gatsby-ipfs-web-wallet": "^1.19.1",
+    "gatsby-plugin-bch-tx-history": "^1.0.4",
+    "isomorphic-fetch": "^3.0.0",
+    "leaflet": "^1.7.1",
+    "react-leaflet": "^3.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PurelyPeer/purelypeer-app"
+  },
+  "bugs": {
+    "url": "https://github.com/PurelyPeer/purelypeer-app/issues"
+  },
+  "devDependencies": {
+    "semantic-release": "^17.3.1",
+    "standard": "^14.3.4"
+  },
+  "release": {
+    "publish": [
+      {
+        "path": "@semantic-release/npm",
+        "npmPublish": false
+      }
+    ]
+  }
+}
