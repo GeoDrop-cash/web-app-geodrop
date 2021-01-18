@@ -74,7 +74,7 @@ class About extends React.Component {
               <h4>Gamers:</h4>
               <p>
                 Players can select a Campaign on the Explore page, and they will
-                recieve guided directions to the nearest Drop. When the get
+                recieve guided directions to the nearest Drop. When they get
                 close enough, they can collect the Drop, which will give them an
                 SLP token and 3000 satoshis of BCH.
               </p>
