@@ -30,10 +30,10 @@ export default function HTML (props) {
         />
 
         {/* minimal-slp-wallet-web */}
-        <script src='https://unpkg.com/minimal-slp-wallet' />
+        <script src='https://unpkg.com/minimal-slp-wallet@v4.20.9' />
 
         {/* bch-message-lib */}
-        <script src='https://unpkg.com/bch-message-lib' />
+        <script src='https://unpkg.com/bch-message-lib@2.1.4' />
 
         {props.headComponents}
       </head>
