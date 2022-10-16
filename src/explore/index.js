@@ -235,6 +235,7 @@ class Explore extends React.Component {
   async handleCreateWallet () {
     try {
       const currentWallet = _this.props.walletInfo
+      console.log('currentWallet: ', currentWallet)
 
       if (currentWallet.mnemonic) {
         console.warn('Wallet already exists')
