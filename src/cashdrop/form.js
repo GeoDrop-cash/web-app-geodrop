@@ -160,6 +160,7 @@ class CashDropForm extends React.Component {
       } = _this.state
 
       const SERVER = process.env.SERVER
+      console.log('SERVER: ', SERVER)
 
       const options = {
         method: 'POST',

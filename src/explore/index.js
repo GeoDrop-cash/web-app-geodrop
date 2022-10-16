@@ -235,6 +235,7 @@ class Explore extends React.Component {
   async handleCreateWallet () {
     try {
       const currentWallet = _this.props.walletInfo
+      console.log('currentWallet: ', currentWallet)
 
       if (currentWallet.mnemonic) {
         console.warn('Wallet already exists')
@@ -242,7 +243,8 @@ class Explore extends React.Component {
       }
 
       const apiToken = currentWallet.JWT
-      const restURL = currentWallet.selectedServer
+      // const restURL = currentWallet.selectedServer
+      const restURL = 'https://bchn.fullstack.cash/v5/'
       const bchjsOptions = {}
 
       if (apiToken || restURL) {
@@ -267,6 +269,7 @@ class Explore extends React.Component {
 
       Object.assign(currentWallet, walletInfo)
 
+      console.log('Getting wallet balance')
       const myBalance = await bchWalletLib.getBalance()
 
       const bchjs = bchWalletLib.bchjs
