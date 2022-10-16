@@ -267,6 +267,7 @@ class Explore extends React.Component {
 
       Object.assign(currentWallet, walletInfo)
 
+      console.log('Getting wallet balance')
       const myBalance = await bchWalletLib.getBalance()
 
       const bchjs = bchWalletLib.bchjs
